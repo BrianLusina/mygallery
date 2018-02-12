@@ -3,7 +3,9 @@ import com.android.build.OutputFile
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 apply plugin: "com.github.triplet.play"
+apply plugin: "io.fabric"
 
 def keystoreFile = rootProject.file("keystores/keystore.properties")
 def keystoreProperties = new Properties()
@@ -168,7 +170,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    // support libraries
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
     implementation "com.android.support:design:$supportLibVersion"
@@ -176,7 +179,35 @@ dependencies {
     implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:multidex:$multiDexVersion"
 
+    // jetbrains dependencies
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-commons:0.10.4"
+
+    implementation "com.google.code.gson:gson:2.8.2"
+
+    // reactive extensions
+    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+
+    // dagger
+    implementation "com.google.dagger:dagger:2.14.1"
+    implementation "com.google.dagger:dagger-android-support:2.14.1"
+    kapt "com.google.dagger:dagger-compiler:2.14.1"
+    kapt "com.google.dagger:dagger-android-processor:2.14.1"
+
+    // crashlytics
+    implementation("com.crashlytics.sdk.android:crashlytics:2.9.0@aar") {
+        transitive = true
+    }
+    // answers
+    implementation("com.crashlytics.sdk.android:answers:1.4.1@aar") {
+        transitive = true
+    }
+
+    // tests
     testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "com.android.support.test:runner:$runnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
