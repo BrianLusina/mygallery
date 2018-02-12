@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SharedPrefsHelper - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.mygallery.data.prefs</a>&nbsp;/&nbsp;<a href=".">SharedPrefsHelper</a><br/>
+<br/>
+<h1>SharedPrefsHelper</h1>
+<code><span class="keyword">interface </span><span class="identifier">SharedPrefsHelper</span></code>
+<p><strong>Author</strong><br/>
+lusinabrian on 07/11/17.</p>
+<p><strong>Notes</strong><br/>
+Shared Prefs helper</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-image-file-path.html">getImageFilePath</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getImageFilePath</span><span class="symbol">(</span><span class="identifier" id="com.mygallery.data.prefs.SharedPrefsHelper$getImageFilePath(kotlin.String)/imageFileKey">imageFileKey</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Retrieves the image file path</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="save-image-file-path.html">saveImageFilePath</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">saveImageFilePath</span><span class="symbol">(</span><span class="identifier" id="com.mygallery.data.prefs.SharedPrefsHelper$saveImageFilePath(kotlin.String, kotlin.String)/imageFileKey">imageFileKey</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mygallery.data.prefs.SharedPrefsHelper$saveImageFilePath(kotlin.String, kotlin.String)/imageFilePath">imageFilePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Saves image file path to shared preferences</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.mygallery.data/-data-manager.html">DataManager</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">DataManager</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SharedPrefsHelper</span><span class="symbol">, </span><a href="../../com.mygallery.data.files/-file-helper/index.html"><span class="identifier">FileHelper</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../-shared-prefs-helper-impl/index.html">SharedPrefsHelperImpl</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">SharedPrefsHelperImpl</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SharedPrefsHelper</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

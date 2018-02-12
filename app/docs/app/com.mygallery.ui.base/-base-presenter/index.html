@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasePresenter - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.mygallery.ui.base</a>&nbsp;/&nbsp;<a href=".">BasePresenter</a><br/>
+<br/>
+<h1>BasePresenter</h1>
+<code><span class="keyword">interface </span><span class="identifier">BasePresenter</span><span class="symbol">&lt;</span><span class="keyword">in</span>&nbsp;<span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-base-view/index.html"><span class="identifier">BaseView</span></a><span class="symbol">&gt;</span></code>
+<p><strong>Author</strong><br/>
+lusinabrian on 01/04/17</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-attach.html">onAttach</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onAttach</span><span class="symbol">(</span><span class="identifier" id="com.mygallery.ui.base.BasePresenter$onAttach(com.mygallery.ui.base.BasePresenter.V)/mBaseView">mBaseView</span><span class="symbol">:</span>&nbsp;<span class="identifier">V</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-detach.html">onDetach</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onDetach</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-network-disconnected.html">onNetworkDisconnected</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onNetworkDisconnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>On Network disconnected action.
+This can be used to display a snackbar for informational purposes</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-base-presenter-impl/index.html">BasePresenterImpl</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">BasePresenterImpl</span><span class="symbol">&lt;</span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-base-view/index.html"><span class="identifier">BaseView</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BasePresenter</span><span class="symbol">&lt;</span><span class="identifier">V</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

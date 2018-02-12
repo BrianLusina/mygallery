@@ -6,6 +6,8 @@ apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
 apply plugin: "com.github.triplet.play"
 apply plugin: "io.fabric"
+apply plugin: 'org.jetbrains.dokka-android'
+apply from: "../doc.gradle"
 
 def keystoreFile = rootProject.file("keystores/keystore.properties")
 def keystoreProperties = new Properties()
@@ -112,6 +114,7 @@ android {
         main {
             java.srcDirs += "src/main/kotlin"
             res.srcDirs = [
+                    "src/main/res/layouts/feature_splash",
                     "src/main/res/layouts/feature_main",
                     "src/main/res/layouts/common",
                     "src/main/res/layouts",
