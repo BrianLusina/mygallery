@@ -1,33 +1,182 @@
-apply plugin: 'com.android.application'
+import com.android.build.OutputFile
 
-apply plugin: 'kotlin-android'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "com.github.triplet.play"
 
-apply plugin: 'kotlin-android-extensions'
+def keystoreFile = rootProject.file("keystores/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystoreFile))
 
 android {
-    compileSdkVersion 26
-    defaultConfig {
-        applicationId "com.mygallery.mygallery"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    playAccountConfigs {
+        defaultAccountConfig {
+            serviceAccountEmail = rootProject.ext.serviceAccountEmail
+            jsonFile = rootProject.ext.pJsonKeyFile
+        }
     }
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.mygallery"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
+        manifestPlaceholders = [fabricApiKey: rootProject.ext.fabricApiKey]
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    /**
+     * The aapt tool may inflate PNG files that have already been compressed.
+     * To prevent this, you can use the cruncherEnabled flag in Gradle to disable this
+     * process for PNG files:
+     * */
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
+    signingConfigs{
+        release{
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile rootProject.file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
+        }
+    }
+
+    // configurations for deployment
+    play {
+        track = "production"
+        untrackOld = true // will untrack "alpha" while upload to "beta"
+        errorOnSizeLimit = false
+        uploadImages = true
+    }
+
     buildTypes {
         release {
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
+            signingConfig signingConfigs.release
+            resValue "string", "app_name", "MyGallery"
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        debug{
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            applicationIdSuffix ".debug"
+            testCoverageEnabled true
+            resValue "string", "app_name", "MyGallery-dev"
+        }
+    }
+
+    packagingOptions {
+        exclude "META-INF/DEPENDENCIES.txt"
+        exclude "META-INF/LICENSE.txt"
+        exclude "META-INF/NOTICE.txt"
+        exclude "META-INF/NOTICE"
+        exclude "META-INF/LICENSE"
+        exclude "META-INF/DEPENDENCIES"
+        exclude "META-INF/notice.txt"
+        exclude "META-INF/license.txt"
+        exclude "META-INF/dependencies.txt"
+        exclude "META-INF/LGPL2.1"
+    }
+
+    lintOptions {
+        quiet true         // set to true to turn off analysis progress reporting by lint
+        abortOnError false        // if true, stop the gradle build if errors are found
+        ignoreWarnings true        // if true, only report errors
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
+
+    // this enables the modularizing of application resources
+    sourceSets {
+        main {
+            java.srcDirs += "src/main/kotlin"
+            res.srcDirs = [
+                    "src/main/res/layouts/feature_main",
+                    "src/main/res/layouts/common",
+                    "src/main/res/layouts",
+                    "src/main/res"
+            ]
+        }
+
+        androidTest {
+            java.srcDirs += "src/androidTest/kotlin"
+        }
+
+        test {
+            java.srcDirs += "src/test/kotlin"
+        }
+    }
+
+    // For each APK output variant, override versionCode with a combination of
+    // ext.abiCodes * 1000 + variant.versionCode. In this example, variant.versionCode
+    // is equal to defaultConfig.versionCode. If you configure product flavors that
+    // define their own versionCode, variant.versionCode uses that value instead.
+    // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
+    applicationVariants.all { variant ->
+
+        // Assigns a different version code for each output APK
+        // other than the universal APK.
+        variant.outputs.all { output ->
+            // Stores the value of ext.abiCodes that is associated with the ABI for this variant.
+            // Determines the ABI for this variant and returns the mapped value.
+            def baseAbiVersionCode = rootProject.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+
+            // Filter is null for universal APKs.
+            // this will be used when distributing universal APK to crashlytics
+            if (baseAbiVersionCode == null) {
+                tasks.findAll {
+                    it.name.startsWith("crashlyticsUploadDistribution${variant.name.capitalize()}")
+                }.each {
+                    it.doFirst {
+                        ext.betaDistributionApkFilePath = output.outputFile.absolutePath
+                    }
+                }
+            }
+
+            // Because abiCodes.get() returns null for ABIs that are not mapped by ext.abiCodes,
+            // the following code does not override the version code for universal APKs.
+            // However, because we want universal APKs to have the lowest version code,
+            // this outcome is desirable.
+            if (baseAbiVersionCode != null) {
+                // Assigns the new version code to versionCodeOverride, which changes the version code
+                // for only the output APK, not for the variant itself. Skipping this step simply
+                // causes Gradle to use the value of variant.versionCode for the APK.
+                output.versionCodeOverride = baseAbiVersionCode * 1000 + variant.versionCode
+            }
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    implementation "com.android.support:design:$supportLibVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
+    implementation "com.android.support:cardview-v7:$supportLibVersion"
+    implementation "com.android.support:multidex:$multiDexVersion"
+
+    testImplementation "junit:junit:$jUnitVersion"
+    androidTestImplementation "com.android.support.test:runner:$runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
