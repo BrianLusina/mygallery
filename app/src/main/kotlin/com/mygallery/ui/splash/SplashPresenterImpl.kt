@@ -18,4 +18,20 @@ constructor(dataManager: DataManager,
             schedulerProvider: SchedulerProvider
 ) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), SplashPresenter<V> {
 
+    override fun onResume() {
+        baseView.checkForPermissionToExternalStorage()
+    }
+
+    override fun onLoadImages() {
+
+    }
+
+    override fun onRequestForStoragePermission() {
+        baseView.requestForStoragePermission()
+    }
+
+    override fun onStoragePermissionDenied() {
+        baseView.displayPermissionRationale()
+    }
+
 }

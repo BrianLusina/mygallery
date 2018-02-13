@@ -84,19 +84,4 @@ abstract class BaseFragment : Fragment(), BaseView {
     override fun onDestroy() {
         super.onDestroy()
     }
-
-    /**
-     * Callback interface for this fragment */
-    interface Callback {
-        /**
-         * Callback for when a fragment is attached to an activity
-         */
-        fun onFragmentAttached()
-
-        /**
-         * Callback for when a fragment is detached from an activity
-         * @param tag the fragment tag to detach
-         */
-        fun onFragmentDetached(tag: String)
-    }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.mygallery.app.MyGalleryApp
 import com.mygallery.di.components.ActivityComponent
 import com.mygallery.di.components.AppComponent
+import com.mygallery.di.components.DaggerActivityComponent
 import com.mygallery.di.modules.ActivityModule
 import org.jetbrains.anko.AnkoLogger
 
@@ -23,7 +24,7 @@ import org.jetbrains.anko.AnkoLogger
  * @Notes
  */
 
-abstract class BaseActivity : AppCompatActivity(), BaseView, BaseFragment.Callback, AnkoLogger {
+abstract class BaseActivity : AppCompatActivity(), BaseView, AnkoLogger {
 
     val appComponent : AppComponent by lazy { (application as MyGalleryApp).appComponent }
 
@@ -75,21 +76,5 @@ abstract class BaseActivity : AppCompatActivity(), BaseView, BaseFragment.Callba
             val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
-    }
-
-    /**
-     * Callback for when a fragment is attached to an activity
-     */
-    override fun onFragmentAttached() {
-
-    }
-
-    /**
-     * Callback for when a fragment is detached from an activity
-
-     * @param tag the fragment tag to detach
-     */
-    override fun onFragmentDetached(tag: String) {
-
     }
 }

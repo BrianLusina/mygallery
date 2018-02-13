@@ -14,6 +14,8 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -64,6 +66,22 @@ class SplashPresenterTests {
         RxAndroidPlugins.reset()
     }
 
-    // TODO: YOUR TESTS COM HERE
+    fun testOnResumeChecksForStoragePermission(){
+        splashPresenter.onResume()
+
+        verify(mockSplashView, times(1)).checkForPermissionToExternalStorage()
+    }
+
+    fun testOnRequestForStoragePermissionActuallyRequests(){
+        splashPresenter.onRequestForStoragePermission()
+
+        verify(mockSplashView, times(1)).requestForStoragePermission()
+    }
+
+    fun testOnStoragePermissionDeniedDisplaysRationale(){
+        splashPresenter.onStoragePermissionDenied()
+
+        verify(mockSplashView, times(1)).displayPermissionRationale()
+    }
 
 }

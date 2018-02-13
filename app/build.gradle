@@ -171,6 +171,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
@@ -206,6 +210,9 @@ dependencies {
     implementation("com.crashlytics.sdk.android:answers:1.4.1@aar") {
         transitive = true
     }
+
+    // material dialogs
+    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
 
     // tests
     testImplementation "junit:junit:$jUnitVersion"
