@@ -1,5 +1,7 @@
 package com.mygallery.ui.base
 
+import com.mygallery.data.DataManager
+import com.mygallery.data.io.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 

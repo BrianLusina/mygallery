@@ -7,6 +7,12 @@ import com.mygallery.data.io.SchedulerProvider
 import com.mygallery.data.io.SchedulerProviderImpl
 import com.mygallery.di.qualifier.ActivityCtxQualifier
 import com.mygallery.di.scopes.ActivityScope
+import com.mygallery.ui.main.MainPresenter
+import com.mygallery.ui.main.MainPresenterImpl
+import com.mygallery.ui.main.MainView
+import com.mygallery.ui.splash.SplashPresenter
+import com.mygallery.ui.splash.SplashPresenterImpl
+import com.mygallery.ui.splash.SplashView
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -39,9 +45,15 @@ class ActivityModule(val mActivity: AppCompatActivity) {
         return CompositeDisposable()
     }
 
-//    @Provides
-//    @ActivityScope
-//    fun provideMainPresenter(photoCapturePresenter: PhotoCapturePresenterImpl<PhotoCaptureView>): PhotoCapturePresenter<PhotoCaptureView> {
-//        return photoCapturePresenter
-//    }
+    @Provides
+    @ActivityScope
+    fun provideMainPresenter(mainPresenter: MainPresenterImpl<MainView>): MainPresenter<MainView> {
+        return mainPresenter
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideSplashPresenter(splashPresenter: SplashPresenterImpl<SplashView>): SplashPresenter<SplashView> {
+        return splashPresenter
+    }
 }
