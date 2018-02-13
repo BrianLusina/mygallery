@@ -11,6 +11,7 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -67,6 +68,9 @@ class MainPresenterTests {
         RxAndroidPlugins.reset()
     }
 
-    // TODO: YOUR TESTS COM HERE
+    @Test
+    fun testOnResume(){
+
+    }
 
 }

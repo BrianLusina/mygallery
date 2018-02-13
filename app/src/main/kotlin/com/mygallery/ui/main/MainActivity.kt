@@ -9,7 +9,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), MainView {
 
     @Inject
-    lateinit var mainPresenter: MainPresenter<SplashView>
+    lateinit var mainPresenter: MainPresenter<MainView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

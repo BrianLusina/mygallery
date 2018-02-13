@@ -12,6 +12,7 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.times
@@ -66,18 +67,21 @@ class SplashPresenterTests {
         RxAndroidPlugins.reset()
     }
 
+    @Test
     fun testOnResumeChecksForStoragePermission(){
         splashPresenter.onResume()
 
         verify(mockSplashView, times(1)).checkForPermissionToExternalStorage()
     }
 
+    @Test
     fun testOnRequestForStoragePermissionActuallyRequests(){
         splashPresenter.onRequestForStoragePermission()
 
         verify(mockSplashView, times(1)).requestForStoragePermission()
     }
 
+    @Test
     fun testOnStoragePermissionDeniedDisplaysRationale(){
         splashPresenter.onStoragePermissionDenied()
 

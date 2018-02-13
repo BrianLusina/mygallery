@@ -23,7 +23,6 @@ abstract class BaseFragment : Fragment(), BaseView {
         if (context is BaseActivity) {
             val mBaseActivity = context
             this.baseActivity = mBaseActivity
-            mBaseActivity.onFragmentAttached()
         }
     }
 
