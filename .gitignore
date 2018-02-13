@@ -4,9 +4,10 @@
 .idea/
 .DS_Store
 app/docs/
-
+*.jks
 /build
 keystores/keystore.properties
+keystores/publish_key.json
 /captures
 .externalNativeBuild
 ### Kotlin template
