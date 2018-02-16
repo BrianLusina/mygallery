@@ -11,6 +11,9 @@ class MainActivity : BaseActivity(), MainView {
     @Inject
     lateinit var mainPresenter: MainPresenter<MainView>
 
+    @Inject
+    lateinit var mainAdapter: MainAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
