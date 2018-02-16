@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_toolbar">Folders</string>
+    <string name="nav_title_all_folders">All Folders</string>
+    <string name="nav_title_hidden_folders">Hidden Folders</string>
+</resources>

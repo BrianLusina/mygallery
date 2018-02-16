@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- All Folders -->
+    <group
+        android:id="@+id/nav_menu_all_folders_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_folders"
+            android:title="@string/nav_title_all_folders"/>
+    </group>
+
+    <!-- Hidden folders -->
+    <group
+        android:id="@+id/nav_menu_hidden_folders_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_hidden_folders"
+            android:title="@string/nav_title_hidden_folders"/>
+    </group>
 </menu>

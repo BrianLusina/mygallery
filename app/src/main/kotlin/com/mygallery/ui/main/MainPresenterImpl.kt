@@ -18,4 +18,30 @@ constructor(dataManager: DataManager,
             schedulerProvider: SchedulerProvider
 ) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), MainPresenter<V> {
 
+    override fun onAttach(mBaseView: V) {
+        super.onAttach(mBaseView)
+    }
+
+    override fun onResume() {
+        baseView.setUpToolbar()
+        baseView.setupNavigationView()
+        baseView.setupDrawerLayout()
+        baseView.setupRecyclerAdapter()
+    }
+
+    override fun onRetrieveBundle() {
+        baseView.retrieveBundleFromIntent()
+    }
+
+    override fun onDrawerClosed() {
+        baseView.setupMenuIconOnDrawer()
+    }
+
+    override fun onDrawerOpened() {
+        baseView.setupBackIconOnDrawer()
+    }
+
+    override fun onLaunchCameraClicked() {
+
+    }
 }

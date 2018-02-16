@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_camera"
+        android:src="@drawable/ic_action_camera"
         app:layout_anchor="@id/recycler_view_albums"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="com.title_apps.canalpic.util.ScrollAwareFABBehavior" />

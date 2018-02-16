@@ -14,6 +14,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -69,8 +70,33 @@ class MainPresenterTests {
     }
 
     @Test
-    fun testOnResume(){
+    fun testOnResumeSetsUpViews(){
+        mainPresenter.onResume()
 
+        verify(mockMainView, times(1)).setUpToolbar()
+        verify(mockMainView, times(1)).setupNavigationView()
+        verify(mockMainView, times(1)).setupDrawerLayout()
+        verify(mockMainView, times(1)).setupRecyclerAdapter()
     }
 
+    @Test
+    fun testOnRetrieveBundleSetsUpRetrievalOfIntentBundle(){
+        mainPresenter.onRetrieveBundle()
+
+        verify(mockMainView, times(1)).retrieveBundleFromIntent()
+    }
+
+    @Test
+    fun testOnDrawerOpenedSetsBackButton(){
+        mainPresenter.onDrawerOpened()
+
+        verify(mockMainView, times(1)).setupBackIconOnDrawer()
+    }
+
+    @Test
+    fun testOnDrawerClosedSetsMenuIcon(){
+        mainPresenter.onDrawerClosed()
+
+        verify(mockMainView, times(1)).setupMenuIconOnDrawer()
+    }
 }
