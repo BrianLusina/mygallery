@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.AbsListView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mygallery.R
 import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseActivity
@@ -26,7 +25,7 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
     lateinit var mainPresenter: MainPresenter<MainView>
 
     @Inject
-    lateinit var mainAdapter: MainAdapter
+    lateinit var mainRecyclerAdapter: MainRecyclerAdapter
 
     lateinit var albumArrayList: ArrayList<AlbumModel>
 
@@ -134,7 +133,10 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
 
         recycler_view_albums.layoutManager = GridLayoutManager(this, 2)
         recycler_view_albums.setHasFixedSize(true)
-        recycler_view_albums.adapter = mainAdapter
+        recycler_view_albums.adapter = mainRecyclerAdapter
+
+        // add items to adapter
+        mainRecyclerAdapter.addItemsUsingDiff(albumArrayList)
 
         recycler_view_albums.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {

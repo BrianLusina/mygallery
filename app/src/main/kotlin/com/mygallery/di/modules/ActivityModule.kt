@@ -7,7 +7,7 @@ import com.mygallery.data.io.SchedulerProvider
 import com.mygallery.data.io.SchedulerProviderImpl
 import com.mygallery.di.qualifier.ActivityCtxQualifier
 import com.mygallery.di.scopes.ActivityScope
-import com.mygallery.ui.main.MainAdapter
+import com.mygallery.ui.main.MainRecyclerAdapter
 import com.mygallery.ui.main.MainPresenter
 import com.mygallery.ui.main.MainPresenterImpl
 import com.mygallery.ui.main.MainView
@@ -53,8 +53,8 @@ class ActivityModule(val mActivity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideMainAdapter() : MainAdapter{
-        return MainAdapter(ArrayList())
+    fun provideMainAdapter() : MainRecyclerAdapter {
+        return MainRecyclerAdapter(ArrayList())
     }
 
     @Provides
