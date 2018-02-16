@@ -1,5 +1,6 @@
 package com.mygallery.ui.splash
 
+import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseView
 
 interface SplashView : BaseView {
@@ -19,4 +20,8 @@ interface SplashView : BaseView {
      * */
     fun displayPermissionRationale()
 
+    /**
+     * Opens Main Activity
+     * */
+    fun openMainActivity(albumList: ArrayList<AlbumModel>)
 }

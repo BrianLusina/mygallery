@@ -6,7 +6,11 @@ import android.os.Build
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
 import com.mygallery.R
+import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseActivity
+import com.mygallery.ui.main.MainActivity
+import com.mygallery.utils.INTENT_KEY_ALBUM_URL_DATA
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 class SplashActivity : BaseActivity(), SplashView {
@@ -78,5 +82,9 @@ class SplashActivity : BaseActivity(), SplashView {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun openMainActivity(albumList: ArrayList<AlbumModel>) {
+        startActivity<MainActivity>(INTENT_KEY_ALBUM_URL_DATA to albumList)
     }
 }

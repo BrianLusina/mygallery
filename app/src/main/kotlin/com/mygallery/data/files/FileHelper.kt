@@ -1,8 +1,6 @@
 package com.mygallery.data.files
 
-import android.graphics.Bitmap
-import android.net.Uri
-import java.io.File
+import com.mygallery.data.models.AlbumModel
 
 /**
  * @author lusinabrian on 06/11/17.
@@ -11,22 +9,15 @@ import java.io.File
 interface FileHelper {
 
     /**
-     * Deletes an image file given the photo Path, returns True if deletion is successfull, false
-     * otherwise
-     * @param photoPath Path for the image
-     * @return [Boolean]
+     * Get a list of image folder paths
+     * @return [ArrayList] Album Model list
      * */
-    fun deleteImageFile(photoPath : String) : Boolean
+    fun getAllImagePaths() : ArrayList<AlbumModel>
 
     /**
-     * Saves the image file and sets the destination
-     * @param mResultsBitmap Bitmap of the given photo
-     * @return [String] Location of the image saved
+     * Gets a list of video folders
+     * @return [ArrayList] AlbumModel array list
      * */
-    fun saveImageFile(mResultsBitmap: Bitmap?) : String?
+    fun getListOfVideoFolders() : ArrayList<AlbumModel>
 
-    /**
-     * Creates a temporary image file
-     * */
-    fun createTempImageFile() : Pair<File?, Uri>
 }

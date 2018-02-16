@@ -1,17 +1,11 @@
 package com.mygallery.data.files
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
+import android.database.Cursor
 import android.net.Uri
-import android.os.Environment
-import android.support.v4.content.FileProvider
+import android.provider.MediaStore
+import com.mygallery.data.models.AlbumModel
 import com.mygallery.di.qualifier.AppCtxQualifier
-import com.mygallery.utils.FILE_PROVIDER_AUTHORITY
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,73 +16,88 @@ import javax.inject.Singleton
 @Singleton
 class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context): FileHelper {
 
-    override fun deleteImageFile(photoPath: String): Boolean {
-        // Get the file
-        val imageFile = File(photoPath)
+    override fun getAllImagePaths(): ArrayList<AlbumModel> {
+        val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val listOfAllImages = ArrayList<String>()
+        val albumsList = ArrayList<AlbumModel>()
+        var cursorBucket: Cursor? = null
+        val bucketGroupBy = "1) GROUP BY 1,(2"
+        val bucketOrderBy = "MAX(datetaken) DESC"
 
-        // Delete the image
-        return imageFile.delete()
-    }
+        val projection = arrayOf(MediaStore.Images.ImageColumns.BUCKET_ID,
+                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                MediaStore.Images.ImageColumns.DATE_TAKEN,
+                MediaStore.Images.ImageColumns.DATA)
+        val cursor = context.contentResolver.query(uri, projection, bucketGroupBy, null, bucketOrderBy)
 
-    override fun saveImageFile(mResultsBitmap: Bitmap?): String? {
-        var savedImagePath: String? = null
+        if(cursor != null){
+            val columnIndexData = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+            val columnIndexFolderName = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
 
-        // Create the new file in the external storage
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "JPEG_$timeStamp.jpg"
-        val storageDir = File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES).toString() + "/EmojifyMe")
-        var success = true
-        if (!storageDir.exists()) {
-            success = storageDir.mkdirs()
-        }
+            while(cursor.moveToNext()){
+                val absolutePathOfImage = cursor.getString(columnIndexData)
+                val selectionArgs = arrayOf("%" + cursor.getString(columnIndexFolderName) + "%")
+                val selection = MediaStore.Images.Media.DATA + " like ? "
+                val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+                cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs,
+                        null)
 
-        // Save the new Bitmap
-        if (success) {
-            val imageFile = File(storageDir, imageFileName)
-            savedImagePath = imageFile.absolutePath
-            try {
-                val fOut = FileOutputStream(imageFile)
-                mResultsBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
-                fOut.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
+                if (absolutePathOfImage != "" && absolutePathOfImage != null) {
+                    listOfAllImages.add(absolutePathOfImage)
+                    albumsList.add(AlbumModel(cursor.getString(columnIndexFolderName), absolutePathOfImage,
+                            cursorBucket.count, false))
+                }
             }
-
-            // Add the image to the system gallery
-            galleryAddPic(context, savedImagePath)
         }
 
-        return savedImagePath
+        if(cursorBucket != null){
+            cursorBucket.close()
+        }
+
+        cursor.close()
+
+        return albumsList
     }
 
-    override fun createTempImageFile() : Pair<File?, Uri>{
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = context.externalCacheDir
+    override fun getListOfVideoFolders(): ArrayList<AlbumModel> {
+        var cursorBucket: Cursor? = null
+        val bucketGroupBy = "1) GROUP BY 1,(2"
+        val bucketOrderBy = "MAX(datetaken) DESC"
+        val columnIndexAlbumName: Int
+        val columnIndexAlbumVideo: Int
+        val albumsList = ArrayList<AlbumModel>()
 
-        val photoFile = File.createTempFile(
-                imageFileName, /* prefix */
-                ".jpg", /* suffix */
-                storageDir      /* directory */
-        )
-        val photoUri = FileProvider.getUriForFile(context, FILE_PROVIDER_AUTHORITY, photoFile)
+        val uri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI
 
-        return Pair(photoFile, photoUri)
+        val projection1 = arrayOf(MediaStore.Video.VideoColumns.BUCKET_ID,
+                MediaStore.Video.VideoColumns.BUCKET_DISPLAY_NAME,
+                MediaStore.Video.VideoColumns.DATE_TAKEN,
+                MediaStore.Video.VideoColumns.DATA)
+
+        val cursor = context.contentResolver.query(uri, projection1, bucketGroupBy, null, bucketOrderBy)
+
+        if (cursor != null) {
+            columnIndexAlbumName = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_DISPLAY_NAME)
+            columnIndexAlbumVideo = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
+            while (cursor.moveToNext()) {
+                val selectionArgs = arrayOf("%" + cursor.getString(columnIndexAlbumName) + "%")
+
+                val selection = MediaStore.Video.Media.DATA + " like ? "
+                val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Video.Media.BUCKET_DISPLAY_NAME)
+
+                cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs, null)
+
+                albumsList.add(AlbumModel(cursor.getString(columnIndexAlbumName), cursor.getString(columnIndexAlbumVideo), cursorBucket.count, true))
+            }
+        }
+
+        if (cursorBucket != null){
+            cursorBucket.close()
+        }
+
+        cursor.close()
+
+        return albumsList
     }
 
-
-    /**
-     * Helper method for adding the photo to the system photo gallery so it can be accessed
-     * from other apps.
-     *
-     * @param imagePath The path of the saved image
-     */
-    private fun galleryAddPic(context: Context, imagePath: String) {
-        val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-        val f = File(imagePath)
-        val contentUri = Uri.fromFile(f)
-        mediaScanIntent.data = contentUri
-        context.sendBroadcast(mediaScanIntent)
-    }
 }

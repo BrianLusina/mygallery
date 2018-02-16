@@ -23,7 +23,9 @@ constructor(dataManager: DataManager,
     }
 
     override fun onLoadImages() {
-
+        val albumList = dataManager.getListOfVideoFolders()
+        albumList.addAll(dataManager.getAllImagePaths())
+        baseView.openMainActivity(albumList)
     }
 
     override fun onRequestForStoragePermission() {

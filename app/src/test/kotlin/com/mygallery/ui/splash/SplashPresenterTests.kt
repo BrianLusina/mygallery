@@ -1,7 +1,6 @@
 import android.content.Context
 import com.mygallery.data.DataManager
 import com.mygallery.data.io.TestSchedulerProvider
-import com.mygallery.ui.main.MainView
 import com.mygallery.ui.splash.SplashPresenter
 import com.mygallery.ui.splash.SplashPresenterImpl
 import com.mygallery.ui.splash.SplashView
@@ -86,6 +85,15 @@ class SplashPresenterTests {
         splashPresenter.onStoragePermissionDenied()
 
         verify(mockSplashView, times(1)).displayPermissionRationale()
+    }
+
+    @Test
+    fun testOnLoadImagesFetchesImageAndVideoCollection(){
+        splashPresenter.onLoadImages()
+
+        verify(mockDataManager, times(1)).getAllImagePaths()
+        verify(mockDataManager, times(1)).getListOfVideoFolders()
+        verify(mockSplashView, times(1)).openMainActivity(arrayListOf())
     }
 
 }

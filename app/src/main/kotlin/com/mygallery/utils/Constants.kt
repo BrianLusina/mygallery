@@ -8,3 +8,4 @@ package com.mygallery.utils
 
 const val FILE_PROVIDER_AUTHORITY = "com.mygallery.fileprovider"
 const val SHARED_PREFS_NAME = "mygallery_prefs"
+const val INTENT_KEY_ALBUM_URL_DATA = "ALBUMURLDATA"

@@ -3,6 +3,7 @@ package com.mygallery.data
 import android.graphics.Bitmap
 import android.net.Uri
 import com.mygallery.data.files.FileHelper
+import com.mygallery.data.models.AlbumModel
 import com.mygallery.data.prefs.SharedPrefsHelper
 import java.io.File
 import javax.inject.Inject
@@ -25,15 +26,13 @@ constructor(val prefsHelper: SharedPrefsHelper, val fileHelper: FileHelper) : Da
         return prefsHelper.getImageFilePath(imageFileKey)
     }
 
-    override fun deleteImageFile(photoPath: String): Boolean {
-        return fileHelper.deleteImageFile(photoPath)
+
+    override fun getAllImagePaths(): ArrayList<AlbumModel> {
+        return fileHelper.getAllImagePaths()
     }
 
-    override fun saveImageFile(mResultsBitmap: Bitmap?): String? {
-        return fileHelper.saveImageFile(mResultsBitmap)
+    override fun getListOfVideoFolders(): ArrayList<AlbumModel> {
+        return fileHelper.getListOfVideoFolders()
     }
 
-    override fun createTempImageFile(): Pair<File?, Uri> {
-        return fileHelper.createTempImageFile()
-    }
 }
