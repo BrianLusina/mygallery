@@ -83,7 +83,8 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
 
     override fun setUpToolbar() {
         setSupportActionBar(toolbar)
-
+        
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_action_menu))
         supportActionBar!!.title = getString(R.string.title_toolbar)
         val toggle = ActionBarDrawerToggle(this, drawer_layout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
