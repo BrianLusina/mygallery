@@ -8,5 +8,5 @@
     <dimen name="text_size_fifteen_sp">15sp</dimen>
     <dimen name="text_size_twelve_sp">12sp</dimen>
 
-    <dimen name="album_cover_height">300dp</dimen>
+    <dimen name="album_cover_height">250dp</dimen>
 </resources>

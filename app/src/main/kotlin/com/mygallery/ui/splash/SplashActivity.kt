@@ -22,7 +22,6 @@ class SplashActivity : BaseActivity(), SplashView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
 
         activityComponent.injectSplashActivity(this)
 
@@ -86,5 +85,6 @@ class SplashActivity : BaseActivity(), SplashView {
 
     override fun openMainActivity(albumList: ArrayList<AlbumModel>) {
         startActivity<MainActivity>(INTENT_KEY_ALBUM_URL_DATA to albumList)
+        finish()
     }
 }
