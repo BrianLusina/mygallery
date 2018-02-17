@@ -19,4 +19,18 @@ constructor(dataManager: DataManager,
             schedulerProvider: SchedulerProvider
 ) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), SingleAlbumPresenter<V>{
 
+    override fun onResume() {
+        baseView.setupToolbar()
+        baseView.setupRecyclerAdapter()
+    }
+
+    override fun onRetrieveBundle() {
+        baseView.retrieveBundleFromIntent()
+    }
+
+    override fun onRecyclerViewSetup(folderName: String, isVideo: Boolean) {
+        val imageList = dataManager.getAllShownImagesPath(folderName, isVideo)
+        baseView.addItemsToAdapter(imageList)
+    }
+
 }

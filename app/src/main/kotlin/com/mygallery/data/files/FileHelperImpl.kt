@@ -2,7 +2,6 @@ package com.mygallery.data.files
 
 import android.content.Context
 import android.database.Cursor
-import android.net.Uri
 import android.provider.MediaStore
 import com.mygallery.data.models.AlbumModel
 import com.mygallery.di.qualifier.AppCtxQualifier
@@ -98,6 +97,32 @@ class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context):
         cursor.close()
 
         return albumsList
+    }
+
+    override fun getAllShownImagesPath(folderName: String, isVideo: Boolean): ArrayList<String> {
+        val listOfAllImages = ArrayList<String>()
+        var absolutePathOfImage: String
+
+        val selectionArgs = arrayOf("%$folderName%")
+
+        val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val selection = MediaStore.Images.Media.DATA + " like ? "
+
+        val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+
+        val cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs, null)
+
+        val columnIndexData = cursorBucket.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+
+        while (cursorBucket.moveToNext()) {
+            absolutePathOfImage = cursorBucket.getString(columnIndexData)
+            if (absolutePathOfImage != "" && absolutePathOfImage != null)
+                listOfAllImages.add(absolutePathOfImage)
+        }
+
+        cursorBucket.close()
+
+        return listOfAllImages
     }
 
 }

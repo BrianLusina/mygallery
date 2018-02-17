@@ -20,4 +20,11 @@ interface FileHelper {
      * */
     fun getListOfVideoFolders() : ArrayList<AlbumModel>
 
+    /**
+     * Gets all the shown images from the given folder name
+     * @param folderName Folder name to retrieve images from
+     * @param isVideo Whether we are dealing with videos or not
+     * */
+    fun getAllShownImagesPath(folderName: String, isVideo: Boolean) : ArrayList<String>
+
 }

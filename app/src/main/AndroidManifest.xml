@@ -29,6 +29,8 @@
         </activity>
 
         <activity android:name=".ui.albums.AlbumsActivity"/>
+
+        <activity android:name=".ui.singlealbum.SingleAlbumActivity"/>
     </application>
 
 </manifest>

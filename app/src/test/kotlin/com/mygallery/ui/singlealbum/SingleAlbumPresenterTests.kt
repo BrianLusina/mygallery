@@ -14,6 +14,8 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -63,7 +65,28 @@ class SingleAlbumPresenterTests {
     }
 
     @Test
-    fun test(){
+    fun testOnResumeSetsUpViews(){
+        singleAlbumPresenter.onResume()
 
+        verify(mockSingleAlbumView, times(1)).setupToolbar()
+        verify(mockSingleAlbumView, times(1)).setupRecyclerAdapter()
+    }
+
+    @Test
+    fun testOnRetrieveBundleReceivesIntent(){
+        singleAlbumPresenter.onRetrieveBundle()
+
+        verify(mockSingleAlbumView, times(1)).retrieveBundleFromIntent()
+    }
+
+    @Test
+    fun testOnRecyclerViewSetup(){
+        singleAlbumPresenter.onRecyclerViewSetup("Camera", false)
+
+        // verify that the data manager is called
+        verify(mockDataManager, times(1)).getAllShownImagesPath("Camera", false)
+
+        // verify that the view is called to setup adapter items
+        verify(mockSingleAlbumView, times(1)).addItemsToAdapter(arrayListOf())
     }
 }

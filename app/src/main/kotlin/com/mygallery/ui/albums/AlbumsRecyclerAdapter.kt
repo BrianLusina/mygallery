@@ -18,14 +18,6 @@ constructor(private var albumList : ArrayList<AlbumModel>) : BaseRecyclerAdapter
 
     lateinit var callback: Callback
 
-    override fun onViewRecycled(holder: BaseViewHolder<AlbumModel>?) {
-        super.onViewRecycled(holder)
-    }
-
-    override fun onViewDetachedFromWindow(holder: BaseViewHolder<AlbumModel>?) {
-        super.onViewDetachedFromWindow(holder)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<AlbumModel> {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.item_album, parent, false)
         return AlbumViewHolder(v, albumList, callback)

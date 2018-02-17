@@ -7,12 +7,13 @@ import com.mygallery.data.io.SchedulerProvider
 import com.mygallery.data.io.SchedulerProviderImpl
 import com.mygallery.di.qualifier.ActivityCtxQualifier
 import com.mygallery.di.scopes.ActivityScope
-import com.mygallery.ui.albums.AlbumsRecyclerAdapter
 import com.mygallery.ui.albums.AlbumsPresenter
 import com.mygallery.ui.albums.AlbumsPresenterImpl
+import com.mygallery.ui.albums.AlbumsRecyclerAdapter
 import com.mygallery.ui.albums.AlbumsView
 import com.mygallery.ui.singlealbum.SingleAlbumPresenter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
+import com.mygallery.ui.singlealbum.SingleAlbumRecyclerAdapter
 import com.mygallery.ui.singlealbum.SingleAlbumView
 import com.mygallery.ui.splash.SplashPresenter
 import com.mygallery.ui.splash.SplashPresenterImpl
@@ -20,7 +21,6 @@ import com.mygallery.ui.splash.SplashView
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
-import kotlin.math.sin
 
 /**
  * @author lusinabrian on 20/09/17.
@@ -71,5 +71,10 @@ class ActivityModule(val mActivity: AppCompatActivity) {
     @ActivityScope
     fun provideSingleAlbumsPresenter(singleAlbumPresenter: SingleAlbumPresenterImpl<SingleAlbumView>) : SingleAlbumPresenter<SingleAlbumView>{
         return singleAlbumPresenter
+    }
+
+    @Provides
+    fun provideSingleAlbumAdapter() : SingleAlbumRecyclerAdapter{
+        return SingleAlbumRecyclerAdapter(mutableListOf())
     }
 }

@@ -35,4 +35,7 @@ constructor(val prefsHelper: SharedPrefsHelper, val fileHelper: FileHelper) : Da
         return fileHelper.getListOfVideoFolders()
     }
 
+    override fun getAllShownImagesPath(folderName: String, isVideo: Boolean): ArrayList<String> {
+        return fileHelper.getAllShownImagesPath(folderName, isVideo)
+    }
 }

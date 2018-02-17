@@ -13,11 +13,15 @@ import com.bumptech.glide.Glide
 import com.mygallery.R
 import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseActivity
+import com.mygallery.ui.singlealbum.SingleAlbumActivity
 import com.mygallery.utils.INTENT_KEY_ALBUM_URL_DATA
+import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
+import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
 import kotlinx.android.synthetic.main.activity_albums.*
 import kotlinx.android.synthetic.main.content_albums.*
 import kotlinx.android.synthetic.main.navigation_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -160,6 +164,9 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
     }
 
     override fun onAlbumFolderClicked(folderName: String, isVideo: Boolean) {
-        toast("Folder $folderName")
+        startActivity<SingleAlbumActivity>(
+                INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME to folderName,
+                INTENT_KEY_SINGLE_ALBUM_IS_VIDEO to isVideo
+        )
     }
 }
