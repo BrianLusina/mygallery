@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import com.mygallery.R
 import com.mygallery.ui.base.BaseActivity
+import com.mygallery.ui.photo.PhotoActivity
+import com.mygallery.utils.INTENT_KEY_PHOTO_ITEM_PATH
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
 import kotlinx.android.synthetic.main.activity_single_album.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -40,6 +43,8 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
 
         // attach your presenter
         singleAlbumPresenter.onAttach(this)
+
+        singleAlbumRecyclerAdapter.callback = this
 
         if (savedInstanceState != null) {
             folderName = savedInstanceState.getString(KEY_SINGLE_ALBUM_FOLDER_NAME)
@@ -79,6 +84,7 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
     override fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = folderName
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun retrieveBundleFromIntent() {
@@ -93,6 +99,6 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
     }
 
     override fun onSinglePhotoClick(photoItemName: String) {
-        toast("PhotoItem $photoItemName")
+        startActivity<PhotoActivity>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
     }
 }

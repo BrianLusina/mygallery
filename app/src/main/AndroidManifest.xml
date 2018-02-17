@@ -31,6 +31,9 @@
         <activity android:name=".ui.albums.AlbumsActivity"/>
 
         <activity android:name=".ui.singlealbum.SingleAlbumActivity"/>
+
+        <activity android:name=".ui.photo.PhotoActivity"/>
+
     </application>
 
 </manifest>

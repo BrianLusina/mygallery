@@ -117,6 +117,7 @@ android {
                     "src/main/res/layouts/feature_splash",
                     "src/main/res/layouts/feature_albums",
                     "src/main/res/layouts/feature_single_album",
+                    "src/main/res/layouts/feature_photo",
                     "src/main/res/layouts/common",
                     "src/main/res/layouts",
                     "src/main/res"

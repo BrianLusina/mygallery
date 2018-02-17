@@ -11,6 +11,9 @@ import com.mygallery.ui.albums.AlbumsPresenter
 import com.mygallery.ui.albums.AlbumsPresenterImpl
 import com.mygallery.ui.albums.AlbumsRecyclerAdapter
 import com.mygallery.ui.albums.AlbumsView
+import com.mygallery.ui.photo.PhotoPresenter
+import com.mygallery.ui.photo.PhotoPresenterImpl
+import com.mygallery.ui.photo.PhotoView
 import com.mygallery.ui.singlealbum.SingleAlbumPresenter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
 import com.mygallery.ui.singlealbum.SingleAlbumRecyclerAdapter
@@ -75,6 +78,12 @@ class ActivityModule(val mActivity: AppCompatActivity) {
 
     @Provides
     fun provideSingleAlbumAdapter() : SingleAlbumRecyclerAdapter{
-        return SingleAlbumRecyclerAdapter(mutableListOf())
+        return SingleAlbumRecyclerAdapter(arrayListOf())
+    }
+
+    @Provides
+    @ActivityScope
+    fun providePhotoPresenter(photoPresenter: PhotoPresenterImpl<PhotoView>) : PhotoPresenter<PhotoView>{
+        return photoPresenter
     }
 }
