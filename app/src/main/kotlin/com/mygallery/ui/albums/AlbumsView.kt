@@ -1,8 +1,8 @@
-package com.mygallery.ui.main
+package com.mygallery.ui.albums
 
 import com.mygallery.ui.base.BaseView
 
-interface MainView : BaseView {
+interface AlbumsView : BaseView {
 
     fun retrieveBundleFromIntent()
 

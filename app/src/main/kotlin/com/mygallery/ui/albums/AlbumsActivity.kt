@@ -1,8 +1,9 @@
-package com.mygallery.ui.main
+package com.mygallery.ui.albums
 
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
@@ -13,19 +14,20 @@ import com.mygallery.R
 import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseActivity
 import com.mygallery.utils.INTENT_KEY_ALBUM_URL_DATA
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.activity_albums.*
+import kotlinx.android.synthetic.main.content_albums.*
 import kotlinx.android.synthetic.main.navigation_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView, View.OnClickListener {
+class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsRecyclerAdapter.Callback {
 
     @Inject
-    lateinit var mainPresenter: MainPresenter<MainView>
+    lateinit var albumsPresenter: AlbumsPresenter<AlbumsView>
 
     @Inject
-    lateinit var mainRecyclerAdapter: MainRecyclerAdapter
+    lateinit var albumsRecyclerAdapter: AlbumsRecyclerAdapter
 
     lateinit var albumArrayList: ArrayList<AlbumModel>
 
@@ -35,22 +37,24 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_albums)
 
-        activityComponent.injectMainActivity(this)
+        activityComponent.injectAlbumsActivity(this)
 
-        mainPresenter.onAttach(this)
+        albumsPresenter.onAttach(this)
+
+        albumsRecyclerAdapter.callback = this
 
         if(savedInstanceState != null){
             albumArrayList = savedInstanceState.get(KEY_ALBUM_BUNDLE) as ArrayList<AlbumModel>
         } else {
-            mainPresenter.onRetrieveBundle()
+            albumsPresenter.onRetrieveBundle()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        mainPresenter.onResume()
+        albumsPresenter.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -68,7 +72,7 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
     override fun onClick(v: View?) {
         when(v){
             fab_camera -> {
-                mainPresenter.onLaunchCameraClicked()
+                albumsPresenter.onLaunchCameraClicked()
             }
         }
     }
@@ -76,10 +80,11 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
     override fun setUpToolbar() {
         setSupportActionBar(toolbar)
 
-        // Enable the Up button
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_action_menu))
         supportActionBar!!.title = getString(R.string.title_toolbar)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     override fun setupNavigationView() {
@@ -105,11 +110,11 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
 
             override fun onDrawerClosed(drawerView: View) {
-                mainPresenter.onDrawerClosed()
+                // albumsPresenter.onDrawerClosed()
             }
 
             override fun onDrawerOpened(drawerView: View) {
-                mainPresenter.onDrawerOpened()
+                // albumsPresenter.onDrawerOpened()
             }
         })
     }
@@ -133,10 +138,10 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
 
         recycler_view_albums.layoutManager = GridLayoutManager(this, 2)
         recycler_view_albums.setHasFixedSize(true)
-        recycler_view_albums.adapter = mainRecyclerAdapter
+        recycler_view_albums.adapter = albumsRecyclerAdapter
 
         // add items to adapter
-        mainRecyclerAdapter.addItemsUsingDiff(albumArrayList)
+        albumsRecyclerAdapter.addItemsUsingDiff(albumArrayList)
 
         recycler_view_albums.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -152,5 +157,9 @@ class MainActivity : BaseActivity(), MainView, View.OnClickListener {
                 }
             }
         })
+    }
+
+    override fun onAlbumFolderClicked(folderName: String, isVideo: Boolean) {
+        toast("Folder $folderName")
     }
 }

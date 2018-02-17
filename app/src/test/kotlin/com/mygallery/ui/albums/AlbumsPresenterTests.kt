@@ -1,9 +1,9 @@
 import android.content.Context
 import com.mygallery.data.io.TestSchedulerProvider
 import com.mygallery.data.DataManager
-import com.mygallery.ui.main.MainPresenter
-import com.mygallery.ui.main.MainPresenterImpl
-import com.mygallery.ui.main.MainView
+import com.mygallery.ui.albums.AlbumsPresenter
+import com.mygallery.ui.albums.AlbumsPresenterImpl
+import com.mygallery.ui.albums.AlbumsView
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,14 +20,14 @@ import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * @author lusinabrian on 13/02/18
- * @Notes Tests for MainPresenterTests
+ * @Notes Tests for AlbumsPresenterTests
  * This will check if the expected methods on the view are called as expected
  */
 @RunWith(MockitoJUnitRunner::class)
-class MainPresenterTests {
+class AlbumsPresenterTests {
 
     @Mock
-    lateinit var mockMainView: MainView
+    lateinit var mockAlbumsView: AlbumsView
 
     @Mock
     lateinit var mockDataManager: DataManager
@@ -35,7 +35,7 @@ class MainPresenterTests {
     @Mock
     lateinit var mockedContext: Context
 
-    lateinit var mainPresenter : MainPresenter<MainView>
+    lateinit var albumsPresenter: AlbumsPresenter<AlbumsView>
     lateinit var mTestScheduler: TestScheduler
 
     companion object {
@@ -58,45 +58,45 @@ class MainPresenterTests {
         mTestScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(mTestScheduler)
 
-        mainPresenter = MainPresenterImpl(mockDataManager, compositeDisposable, testSchedulerProvider)
-        mainPresenter.onAttach(mockMainView)
+        albumsPresenter = AlbumsPresenterImpl(mockDataManager, compositeDisposable, testSchedulerProvider)
+        albumsPresenter.onAttach(mockAlbumsView)
     }
 
     @After
     @Throws(Exception::class)
     fun tearDown() {
-        mainPresenter.onDetach()
+        albumsPresenter.onDetach()
         RxAndroidPlugins.reset()
     }
 
     @Test
     fun testOnResumeSetsUpViews(){
-        mainPresenter.onResume()
+        albumsPresenter.onResume()
 
-        verify(mockMainView, times(1)).setUpToolbar()
-        verify(mockMainView, times(1)).setupNavigationView()
-        verify(mockMainView, times(1)).setupDrawerLayout()
-        verify(mockMainView, times(1)).setupRecyclerAdapter()
+        verify(mockAlbumsView, times(1)).setUpToolbar()
+        verify(mockAlbumsView, times(1)).setupNavigationView()
+        verify(mockAlbumsView, times(1)).setupDrawerLayout()
+        verify(mockAlbumsView, times(1)).setupRecyclerAdapter()
     }
 
     @Test
     fun testOnRetrieveBundleSetsUpRetrievalOfIntentBundle(){
-        mainPresenter.onRetrieveBundle()
+        albumsPresenter.onRetrieveBundle()
 
-        verify(mockMainView, times(1)).retrieveBundleFromIntent()
+        verify(mockAlbumsView, times(1)).retrieveBundleFromIntent()
     }
 
     @Test
     fun testOnDrawerOpenedSetsBackButton(){
-        mainPresenter.onDrawerOpened()
+        albumsPresenter.onDrawerOpened()
 
-        verify(mockMainView, times(1)).setupBackIconOnDrawer()
+        verify(mockAlbumsView, times(1)).setupBackIconOnDrawer()
     }
 
     @Test
     fun testOnDrawerClosedSetsMenuIcon(){
-        mainPresenter.onDrawerClosed()
+        albumsPresenter.onDrawerClosed()
 
-        verify(mockMainView, times(1)).setupMenuIconOnDrawer()
+        verify(mockAlbumsView, times(1)).setupMenuIconOnDrawer()
     }
 }

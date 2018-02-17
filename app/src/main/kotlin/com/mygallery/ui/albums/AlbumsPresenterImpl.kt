@@ -1,4 +1,4 @@
-package com.mygallery.ui.main
+package com.mygallery.ui.albums
 
 import com.mygallery.data.DataManager
 import com.mygallery.data.io.SchedulerProvider
@@ -11,12 +11,12 @@ import javax.inject.Inject
  * @notes: Presenter layer to interact with data and view
  */
 
-class MainPresenterImpl<V : MainView>
+class AlbumsPresenterImpl<V : AlbumsView>
 @Inject
 constructor(dataManager: DataManager,
             compositeDisposable: CompositeDisposable,
             schedulerProvider: SchedulerProvider
-) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), MainPresenter<V> {
+) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), AlbumsPresenter<V> {
 
     override fun onAttach(mBaseView: V) {
         super.onAttach(mBaseView)

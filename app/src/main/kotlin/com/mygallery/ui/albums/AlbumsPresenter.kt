@@ -1,8 +1,8 @@
-package com.mygallery.ui.main
+package com.mygallery.ui.albums
 
 import com.mygallery.ui.base.BasePresenter
 
-interface MainPresenter<V : MainView> : BasePresenter<V> {
+interface AlbumsPresenter<V : AlbumsView> : BasePresenter<V> {
 
     /**
      * Retrieve Bundle from intent

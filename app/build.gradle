@@ -115,7 +115,8 @@ android {
             java.srcDirs += "src/main/kotlin"
             res.srcDirs = [
                     "src/main/res/layouts/feature_splash",
-                    "src/main/res/layouts/feature_main",
+                    "src/main/res/layouts/feature_albums",
+                    "src/main/res/layouts/feature_single_album",
                     "src/main/res/layouts/common",
                     "src/main/res/layouts",
                     "src/main/res"

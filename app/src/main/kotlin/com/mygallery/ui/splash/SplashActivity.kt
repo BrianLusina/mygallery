@@ -8,7 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.mygallery.R
 import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseActivity
-import com.mygallery.ui.main.MainActivity
+import com.mygallery.ui.albums.AlbumsActivity
 import com.mygallery.utils.INTENT_KEY_ALBUM_URL_DATA
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class SplashActivity : BaseActivity(), SplashView {
     }
 
     override fun openMainActivity(albumList: ArrayList<AlbumModel>) {
-        startActivity<MainActivity>(INTENT_KEY_ALBUM_URL_DATA to albumList)
+        startActivity<AlbumsActivity>(INTENT_KEY_ALBUM_URL_DATA to albumList)
         finish()
     }
 }

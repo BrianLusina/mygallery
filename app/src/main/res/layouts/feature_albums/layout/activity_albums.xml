@@ -17,7 +17,7 @@
         android:fitsSystemWindows="true">
 
         <!--main layout-->
-        <include layout="@layout/content_main" />
+        <include layout="@layout/content_albums" />
 
         <!--navigation layout-->
         <include layout="@layout/navigation_layout" />
