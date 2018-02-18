@@ -1,0 +1,10 @@
+dokka {
+    outputFormat = "html"
+    outputDirectory = "$projectDir/docs"
+
+    linkMapping {
+        dir = "src/main/kotlin"
+        url = "https://github.com/BrianLusina/mygallery/blob/master/src/main/kotlin"
+        suffix = "#L"
+    }
+}

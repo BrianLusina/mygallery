@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appName "MyGallery" >
+    ]>
+<resources>
+    <string name="title_dialog_storage_permission">&appName; Storage Permission</string>
+    <string name="content_dialog_storage_permission">&appName; needs your permission to access storage permission to access your photos and media, promise,that this will not be leaked online :D</string>
+    <string name="action_dialog_positive">OK, Cool</string>
+    <string name="action_dialog_negative">Nah!</string>
+</resources>

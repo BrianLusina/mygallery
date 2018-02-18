@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/five_dp"
+    card_view:cardCornerRadius="@dimen/zero_dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            card_view:layout_constraintGuide_percent="0.05"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            card_view:layout_constraintGuide_percent="0.95"/>
+
+        <ImageView
+            android:id="@+id/image_view_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/album_cover_height"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintTop_toBottomOf="@id/image_view_thumbnail"
+            card_view:layout_constraintLeft_toLeftOf="@id/guideline_left"
+            card_view:layout_constraintRight_toRightOf="@id/guideline_right"
+            card_view:layout_constraintHorizontal_bias="0.08"
+            android:paddingLeft="@dimen/ten_dp"
+            android:paddingRight="@dimen/ten_dp"
+            android:paddingTop="@dimen/ten_dp"
+            tools:text="Camera"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/text_size_fifteen_sp" />
+
+        <TextView
+            android:id="@+id/text_view_photo_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/five_dp"
+            android:paddingLeft="@dimen/ten_dp"
+            android:paddingRight="@dimen/six_dp"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/text_size_twelve_sp"
+            android:paddingEnd="@dimen/six_dp"
+            tools:text="50"
+            android:paddingStart="@dimen/ten_dp"
+            card_view:layout_constraintTop_toBottomOf="@id/text_view_title"
+            card_view:layout_constraintLeft_toLeftOf="@id/guideline_left"
+            card_view:layout_constraintRight_toRightOf="@id/guideline_right"
+            card_view:layout_constraintHorizontal_bias="0.08" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

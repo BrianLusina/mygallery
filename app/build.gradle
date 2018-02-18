@@ -6,6 +6,8 @@ apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
 apply plugin: "com.github.triplet.play"
 apply plugin: "io.fabric"
+apply plugin: 'org.jetbrains.dokka-android'
+apply from: "../doc.gradle"
 
 def keystoreFile = rootProject.file("keystores/keystore.properties")
 def keystoreProperties = new Properties()
@@ -112,7 +114,10 @@ android {
         main {
             java.srcDirs += "src/main/kotlin"
             res.srcDirs = [
-                    "src/main/res/layouts/feature_main",
+                    "src/main/res/layouts/feature_splash",
+                    "src/main/res/layouts/feature_albums",
+                    "src/main/res/layouts/feature_single_album",
+                    "src/main/res/layouts/feature_photo",
                     "src/main/res/layouts/common",
                     "src/main/res/layouts",
                     "src/main/res"
@@ -168,11 +173,16 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     // support libraries
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support:support-v4:$supportLibVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
@@ -184,6 +194,10 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
 
     implementation "com.google.code.gson:gson:2.8.2"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:3.7.0"
+    kapt "com.github.bumptech.glide:compiler:4.6.1"
 
     // reactive extensions
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
@@ -203,6 +217,9 @@ dependencies {
     implementation("com.crashlytics.sdk.android:answers:1.4.1@aar") {
         transitive = true
     }
+
+    // material dialogs
+    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
 
     // tests
     testImplementation "junit:junit:$jUnitVersion"
