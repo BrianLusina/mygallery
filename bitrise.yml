@@ -61,6 +61,18 @@ workflows:
                                         - gradle_task: test
                                         - gradlew_path: "$GRADLEW_PATH"
         
+        lint:
+                before_run:
+                        - setup
+                steps:
+                        - script@1.1.5:
+                                title: Lint Application
+                        - gradle-runner@1.8.2:
+                                inputs:
+                                        - gradle_file: "$GRADLE_BUILD_FILE_PATH"
+                                        - gradle_task: detektCheck
+                                        - gradlew_path: "$GRADLEW_PATH"
+
         deploy:
                 before_run:
                         - test
