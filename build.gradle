@@ -15,6 +15,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.[version]"
+}
+
 allprojects {
     repositories {
         google()
@@ -25,6 +29,18 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+detekt {
+    version = "1.0.0.RC6-3"
+    profile("main") {
+        input = "$projectDir/app/src/main/kotlin"
+        output = "$projectDir/reports/report.xml"
+        // outputFormat = "xml"
+        config = "$projectDir/detekt.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+        parallel = true
+    }
 }
 
 /**
