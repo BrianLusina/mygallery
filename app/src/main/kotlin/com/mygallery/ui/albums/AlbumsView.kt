@@ -35,4 +35,9 @@ interface AlbumsView : BaseView {
      * Sets up recycler adapter
      * */
     fun setupRecyclerAdapter()
+
+    /**
+     * Open Github page
+     * */
+    fun openGithubPage()
 }

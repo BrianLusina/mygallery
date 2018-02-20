@@ -7,6 +7,7 @@ package com.mygallery.utils
  */
 
 const val FILE_PROVIDER_AUTHORITY = "com.mygallery.fileprovider"
+const val OPEN_SOURCE_URL="https://github.com/BrianLusina/mygallery"
 const val SHARED_PREFS_NAME = "mygallery_prefs"
 const val INTENT_KEY_ALBUM_URL_DATA = "ALBUM_URL_DATA"
 const val INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME = "SINGLE_ALBUM_FOLDER_NAME"

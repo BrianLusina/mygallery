@@ -27,4 +27,9 @@ interface AlbumsPresenter<V : AlbumsView> : BasePresenter<V> {
     /**
      * On Launch camera clicked*/
     fun onLaunchCameraClicked()
+
+    /**
+     * On open source menu item clicked
+     * */
+    fun onOpenSourceMenuClicked()
 }

@@ -17,10 +17,12 @@ import com.mygallery.ui.singlealbum.SingleAlbumActivity
 import com.mygallery.utils.INTENT_KEY_ALBUM_URL_DATA
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
+import com.mygallery.utils.OPEN_SOURCE_URL
 import kotlinx.android.synthetic.main.activity_albums.*
 import kotlinx.android.synthetic.main.content_albums.*
 import kotlinx.android.synthetic.main.navigation_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import org.jetbrains.anko.browse
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import javax.inject.Inject
@@ -103,6 +105,10 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
                 R.id.nav_hidden_folders -> {
 
                 }
+
+                R.id.nav_open_source ->{
+                    albumsPresenter.onOpenSourceMenuClicked()
+                }
             }
             false
         }
@@ -169,5 +175,9 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
                 INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME to folderName,
                 INTENT_KEY_SINGLE_ALBUM_IS_VIDEO to isVideo
         )
+    }
+
+    override fun openGithubPage() {
+        browse(OPEN_SOURCE_URL)
     }
 }
