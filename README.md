@@ -1,6 +1,7 @@
 # MyGallery
 
 [![Build Status](https://www.bitrise.io/app/e240ce32d7bab980/status.svg?token=WyjkV9jju1NVA4QL8LSTvQ)](https://www.bitrise.io/app/e240ce32d7bab980)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a52748da9ba24fc79678fe12d6861d54)](https://www.codacy.com/app/BrianLusina/mygallery?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BrianLusina/mygallery&amp;utm_campaign=Badge_Grade)
 
 Simple Android application that displays Gallery Albums from user's device and allows them to navigate through their albums pictures.
 
