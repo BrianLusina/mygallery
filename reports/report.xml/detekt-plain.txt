@@ -1,2 +1,0 @@
-TooManyFunctions - 14/10 - [AlbumsActivity] at kotlin/com/mygallery/ui/albums/AlbumsActivity.kt:29:1 - Signature=AlbumsActivity.kt$AlbumsActivity : BaseActivityAlbumsViewOnClickListenerCallback
-MagicNumber - [setupFullScreenImage] at kotlin/com/mygallery/ui/photo/PhotoActivity.kt:86:12 - Signature=PhotoActivity.kt$PhotoActivity$1500
