@@ -36,9 +36,9 @@ class PhotoActivity : BaseActivity(), PhotoView {
         // attach your presenter
         photoPresenter.onAttach(this)
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             photoPath = savedInstanceState.getString(KEY_PHOTO_PATH)
-        } else{
+        } else {
             photoPresenter.onRetrieveBundle()
         }
     }
@@ -50,7 +50,7 @@ class PhotoActivity : BaseActivity(), PhotoView {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             photoPath = savedInstanceState.getString(KEY_PHOTO_PATH)
         }
     }
@@ -61,7 +61,7 @@ class PhotoActivity : BaseActivity(), PhotoView {
     }
 
     override fun retrieveBundleFromIntent() {
-        if(intent.extras != null && intent.getStringExtra(INTENT_KEY_PHOTO_ITEM_PATH) != null){
+        if (intent.extras != null && intent.getStringExtra(INTENT_KEY_PHOTO_ITEM_PATH) != null) {
             photoPath = intent.extras.getString(INTENT_KEY_PHOTO_ITEM_PATH)
         }
     }
@@ -80,7 +80,8 @@ class PhotoActivity : BaseActivity(), PhotoView {
 
         Handler().postDelayed({
             if (supportActionBar != null)
-                appbar.animate().translationY(-appbar.bottom.toFloat()).setInterpolator(AccelerateInterpolator()).start()
+                appbar.animate().translationY(-appbar.bottom.toFloat())
+                        .setInterpolator(AccelerateInterpolator()).start()
             isAppBarShown = false
         }, 1500)
     }

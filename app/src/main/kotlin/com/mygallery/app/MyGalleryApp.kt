@@ -5,9 +5,9 @@ import android.content.Context
 import android.support.multidex.MultiDex
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
-import com.mygallery.di.modules.AppModule
 import com.mygallery.di.components.AppComponent
 import com.mygallery.di.components.DaggerAppComponent
+import com.mygallery.di.modules.AppModule
 import io.fabric.sdk.android.Fabric
 
 class MyGalleryApp : Application(){

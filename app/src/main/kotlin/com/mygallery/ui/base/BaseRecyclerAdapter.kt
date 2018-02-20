@@ -71,25 +71,16 @@ abstract class BaseRecyclerAdapter<T>(private var objectList: ArrayList<T>)
         updateItemsInternal(newObjectList)
     }
 
-    /**
-     * Updates items in adapter and calls a background thread to process
-     * the diff and return it before updating the adapter of the change
-     * */
     private fun updateItemsInternal(newObjectList: ArrayList<T>) {
         val handler = Handler()
         Thread(Runnable {
             val diff = DiffUtilCallback(objectList, newObjectList)
             val diffResult = DiffUtil.calculateDiff(diff)
 
-            handler.post{ applyDiffResult(newObjectList, diffResult) }
+            handler.post { applyDiffResult(newObjectList, diffResult) }
         }).start()
     }
 
-    /**
-     * Applies the diff result to the new items which will apply th dispatch to the adapter
-     * @param newItemList
-     * @param diffResult, result from Diffing of new and old items
-     * */
     private fun applyDiffResult(newItemList: ArrayList<T>, diffResult: DiffUtil.DiffResult) {
         pendingUpdates.remove()
 
@@ -102,15 +93,9 @@ abstract class BaseRecyclerAdapter<T>(private var objectList: ArrayList<T>)
     }
 
 
-    /**
-     * Dispatches updates to adapter with new items and diff result
-     * @param newItems new items to add to adapter
-     * @param diffResult diff result from callback
-     * */
     private fun dispatchUpdates(newItems: ArrayList<T>, diffResult: DiffUtil.DiffResult) {
         objectList.clear()
         objectList.addAll(newItems)
         diffResult.dispatchUpdatesTo(this)
     }
-
 }

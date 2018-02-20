@@ -7,5 +7,4 @@ interface PhotoPresenter<V : PhotoView> : BasePresenter<V> {
     fun onResume()
 
     fun onRetrieveBundle()
-
 }

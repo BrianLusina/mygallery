@@ -1,11 +1,8 @@
 package com.mygallery.data
 
-import android.graphics.Bitmap
-import android.net.Uri
 import com.mygallery.data.files.FileHelper
 import com.mygallery.data.models.AlbumModel
 import com.mygallery.data.prefs.SharedPrefsHelper
-import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 

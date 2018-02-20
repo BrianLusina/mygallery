@@ -11,7 +11,6 @@ import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
 import kotlinx.android.synthetic.main.activity_single_album.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -24,7 +23,7 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
     lateinit var singleAlbumPresenter: SingleAlbumPresenter<SingleAlbumView>
 
     @Inject
-    lateinit var singleAlbumRecyclerAdapter : SingleAlbumRecyclerAdapter
+    lateinit var singleAlbumRecyclerAdapter: SingleAlbumRecyclerAdapter
 
     companion object {
         const val KEY_SINGLE_ALBUM_FOLDER_NAME = "KEY_SINGLE_ALBUM_FOLDER_NAME"
@@ -67,7 +66,7 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             folderName = savedInstanceState.getString(KEY_SINGLE_ALBUM_FOLDER_NAME)
             isVideo = savedInstanceState.getBoolean(KEY_SINGLE_ALBUM_IS_VIDEO)
         }
@@ -88,7 +87,7 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
     }
 
     override fun retrieveBundleFromIntent() {
-        if(intent.extras != null || intent.getBundleExtra(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME) != null){
+        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME) != null) {
             folderName = intent.extras.getString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME)
             isVideo = intent.extras.getBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO)
         }

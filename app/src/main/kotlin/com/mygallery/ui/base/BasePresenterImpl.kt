@@ -54,9 +54,7 @@ constructor(
      * Custom runtime exception that is thrown when an a request of data is made to the presenter before
      * attaching the view.
      */
-    class BaseViewNotAttachedException : RuntimeException("Please call Presenter.onAttach(BaseView) before requesting data to Presenter")
-
-    companion object {
-        private val TAG = BasePresenterImpl::class.java.simpleName
-    }
+    class BaseViewNotAttachedException :
+            RuntimeException("Please call Presenter.onAttach(BaseView) before requesting data " +
+                    "to Presenter")
 }

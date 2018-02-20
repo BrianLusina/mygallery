@@ -7,5 +7,4 @@ import com.mygallery.data.prefs.SharedPrefsHelper
  * @author lusinabrian on 23/09/17.
  * @Notes interface for model layer to delegate model functions
  */
-interface DataManager : SharedPrefsHelper, FileHelper {
-}
+interface DataManager : SharedPrefsHelper, FileHelper

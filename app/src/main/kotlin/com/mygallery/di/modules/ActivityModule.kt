@@ -60,7 +60,7 @@ class ActivityModule(val mActivity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideAlbumsAdapter() : AlbumsRecyclerAdapter {
+    fun provideAlbumsAdapter(): AlbumsRecyclerAdapter {
         return AlbumsRecyclerAdapter(ArrayList())
     }
 
@@ -72,18 +72,19 @@ class ActivityModule(val mActivity: AppCompatActivity) {
 
     @Provides
     @ActivityScope
-    fun provideSingleAlbumsPresenter(singleAlbumPresenter: SingleAlbumPresenterImpl<SingleAlbumView>) : SingleAlbumPresenter<SingleAlbumView>{
+    fun provideSingleAlbumPresenter(singleAlbumPresenter: SingleAlbumPresenterImpl<SingleAlbumView>)
+            : SingleAlbumPresenter<SingleAlbumView> {
         return singleAlbumPresenter
     }
 
     @Provides
-    fun provideSingleAlbumAdapter() : SingleAlbumRecyclerAdapter{
+    fun provideSingleAlbumAdapter(): SingleAlbumRecyclerAdapter {
         return SingleAlbumRecyclerAdapter(arrayListOf())
     }
 
     @Provides
     @ActivityScope
-    fun providePhotoPresenter(photoPresenter: PhotoPresenterImpl<PhotoView>) : PhotoPresenter<PhotoView>{
+    fun providePhotoPresenter(photoPresenter: PhotoPresenterImpl<PhotoView>): PhotoPresenter<PhotoView> {
         return photoPresenter
     }
 }

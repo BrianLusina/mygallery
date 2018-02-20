@@ -16,6 +16,5 @@ interface SingleAlbumPresenter<V : SingleAlbumView> : BasePresenter<V> {
      * @param folderName Folder name to load photos from
      * @param isVideo Whether the album has videos
      * */
-    fun onRecyclerViewSetup(folderName : String, isVideo : Boolean)
-
+    fun onRecyclerViewSetup(folderName: String, isVideo: Boolean)
 }

@@ -12,6 +12,13 @@ interface FileHelper {
      * Get a list of image folder paths
      * @return [ArrayList] Album Model list
      * */
+    /**
+     * Saves data to shared preferences
+     * this is an extension function that
+     * @param key key to use to save data
+     * @param value the value to use to save data
+     * extension functions that allows the saving of data to a shared preference file
+     * */
     fun getAllImagePaths() : ArrayList<AlbumModel>
 
     /**
@@ -26,5 +33,4 @@ interface FileHelper {
      * @param isVideo Whether we are dealing with videos or not
      * */
     fun getAllShownImagesPath(folderName: String, isVideo: Boolean) : ArrayList<String>
-
 }

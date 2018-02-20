@@ -1,9 +1,8 @@
 package com.mygallery.ui.singlealbum
+
 import com.mygallery.data.DataManager
 import com.mygallery.data.io.SchedulerProvider
 import com.mygallery.ui.base.BasePresenterImpl
-import com.mygallery.ui.singlealbum.SingleAlbumPresenter
-import com.mygallery.ui.singlealbum.SingleAlbumView
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -17,7 +16,7 @@ class SingleAlbumPresenterImpl<V : SingleAlbumView>
 constructor(dataManager: DataManager,
             compositeDisposable: CompositeDisposable,
             schedulerProvider: SchedulerProvider
-) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), SingleAlbumPresenter<V>{
+) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), SingleAlbumPresenter<V> {
 
     override fun onResume() {
         baseView.setupToolbar()
@@ -32,5 +31,5 @@ constructor(dataManager: DataManager,
         val imageList = dataManager.getAllShownImagesPath(folderName, isVideo)
         baseView.addItemsToAdapter(imageList)
     }
-
 }
+

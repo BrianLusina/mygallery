@@ -14,7 +14,7 @@ import javax.inject.Inject
  */
 class AlbumsRecyclerAdapter
 @Inject
-constructor(private var albumList : ArrayList<AlbumModel>) : BaseRecyclerAdapter<AlbumModel>(albumList){
+constructor(private var albumList: ArrayList<AlbumModel>) : BaseRecyclerAdapter<AlbumModel>(albumList) {
 
     lateinit var callback: Callback
 
@@ -23,8 +23,8 @@ constructor(private var albumList : ArrayList<AlbumModel>) : BaseRecyclerAdapter
         return AlbumViewHolder(v, albumList, callback)
     }
 
-    interface Callback{
+    interface Callback {
 
-        fun onAlbumFolderClicked(folderName : String, isVideo: Boolean)
+        fun onAlbumFolderClicked(folderName: String, isVideo: Boolean)
     }
 }

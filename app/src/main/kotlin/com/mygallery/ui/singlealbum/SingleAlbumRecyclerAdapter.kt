@@ -11,7 +11,9 @@ import javax.inject.Inject
  * @author lusinabrian on 17/02/18.
  * @Notes Recycler Adapter for a single album
  */
-class SingleAlbumRecyclerAdapter @Inject constructor(private val albumList: ArrayList<String>): BaseRecyclerAdapter<String>(albumList){
+class SingleAlbumRecyclerAdapter
+@Inject
+constructor(private val albumList: ArrayList<String>) : BaseRecyclerAdapter<String>(albumList) {
 
     lateinit var callback: Callback
 
@@ -20,9 +22,8 @@ class SingleAlbumRecyclerAdapter @Inject constructor(private val albumList: Arra
         return SingleAlbumViewHolder(v, albumList, callback)
     }
 
-    interface Callback{
+    interface Callback {
 
-        fun onSinglePhotoClick(photoItemName : String)
+        fun onSinglePhotoClick(photoItemName: String)
     }
-
 }

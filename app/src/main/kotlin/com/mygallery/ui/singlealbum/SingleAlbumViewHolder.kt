@@ -9,10 +9,11 @@ import kotlinx.android.synthetic.main.item_single_album.view.*
  * @author lusinabrian on 17/02/18.
  * @Notes
  */
-class SingleAlbumViewHolder(itemView: View, val albumList: ArrayList<String>) : BaseViewHolder<String>(itemView){
+class SingleAlbumViewHolder(itemView: View, val albumList: ArrayList<String>) : BaseViewHolder<String>(itemView) {
     lateinit var callBack: SingleAlbumRecyclerAdapter.Callback
 
-    constructor(itemView: View, albumList: ArrayList<String>, callBack: SingleAlbumRecyclerAdapter.Callback): this(itemView, albumList){
+    constructor(itemView: View, albumList: ArrayList<String>, callBack: SingleAlbumRecyclerAdapter.Callback)
+            : this(itemView, albumList) {
         this.callBack = callBack
     }
 
@@ -20,13 +21,13 @@ class SingleAlbumViewHolder(itemView: View, val albumList: ArrayList<String>) : 
         super.onBind(position)
         val photoItem = albumList[position]
 
-        with(itemView){
+        with(itemView) {
             Glide.with(context)
                     .load(photoItem)
-                    .thumbnail(0.4f)
+                    .thumbnail(1f)
                     .into(image_view_thumbnail)
 
-            setOnClickListener{
+            setOnClickListener {
                 callBack.onSinglePhotoClick(photoItem)
             }
         }

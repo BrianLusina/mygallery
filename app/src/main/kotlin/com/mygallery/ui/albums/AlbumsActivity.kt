@@ -24,10 +24,10 @@ import kotlinx.android.synthetic.main.navigation_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsRecyclerAdapter.Callback {
+class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener,
+        AlbumsRecyclerAdapter.Callback {
 
     @Inject
     lateinit var albumsPresenter: AlbumsPresenter<AlbumsView>
@@ -51,7 +51,7 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
 
         albumsRecyclerAdapter.callback = this
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             albumArrayList = savedInstanceState.get(KEY_ALBUM_BUNDLE) as ArrayList<AlbumModel>
         } else {
             albumsPresenter.onRetrieveBundle()
@@ -70,13 +70,13 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             albumArrayList = savedInstanceState.get(KEY_ALBUM_BUNDLE) as ArrayList<AlbumModel>
         }
     }
 
     override fun onClick(v: View?) {
-        when(v){
+        when (v) {
             fab_camera -> {
                 albumsPresenter.onLaunchCameraClicked()
             }
@@ -85,11 +85,13 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
 
     override fun setUpToolbar() {
         setSupportActionBar(toolbar)
-        
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_action_menu))
+        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this,
+                R.drawable.ic_action_menu))
         supportActionBar!!.title = getString(R.string.title_toolbar)
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
     }
@@ -97,7 +99,7 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
     override fun setupNavigationView() {
         navigation_view.setNavigationItemSelectedListener {
             drawer_layout.closeDrawer(Gravity.START)
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.nav_all_folders -> {
 
                 }
@@ -106,7 +108,7 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
 
                 }
 
-                R.id.nav_open_source ->{
+                R.id.nav_open_source -> {
                     albumsPresenter.onOpenSourceMenuClicked()
                 }
             }
@@ -115,7 +117,7 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
     }
 
     override fun setupDrawerLayout() {
-        drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener{
+        drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerStateChanged(newState: Int) {}
 
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
@@ -131,15 +133,17 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener, AlbumsR
     }
 
     override fun setupBackIconOnDrawer() {
-        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_action_back))
+        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this,
+                R.drawable.ic_action_back))
     }
 
     override fun setupMenuIconOnDrawer() {
-        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_action_menu))
+        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(this,
+                R.drawable.ic_action_menu))
     }
 
     override fun retrieveBundleFromIntent() {
-        if(intent.extras != null || intent.getBundleExtra(INTENT_KEY_ALBUM_URL_DATA) != null){
+        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_ALBUM_URL_DATA) != null) {
             albumArrayList = intent.extras.get(INTENT_KEY_ALBUM_URL_DATA) as ArrayList<AlbumModel>
         }
     }

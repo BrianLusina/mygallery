@@ -2,10 +2,10 @@ package com.mygallery.di.components
 
 import android.app.Application
 import android.content.Context
-import com.mygallery.di.modules.AppModule
-import com.mygallery.di.qualifier.AppCtxQualifier
 import com.mygallery.app.MyGalleryApp
 import com.mygallery.data.DataManager
+import com.mygallery.di.modules.AppModule
+import com.mygallery.di.qualifier.AppCtxQualifier
 import dagger.Component
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Named
@@ -31,5 +31,5 @@ interface AppComponent {
      * Network Subject. This is posted based on network events
      * */
     @Named("NetworkSubject")
-    fun networkSubject() : PublishSubject<Boolean>
+    fun networkSubject(): PublishSubject<Boolean>
 }

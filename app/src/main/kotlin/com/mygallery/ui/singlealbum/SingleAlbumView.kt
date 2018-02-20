@@ -23,5 +23,5 @@ interface SingleAlbumView : BaseView {
      * Adds Items to adapter
      * @param imageList Array List of images from the given folder path
      * */
-    fun addItemsToAdapter(imageList : ArrayList<String>)
+    fun addItemsToAdapter(imageList: ArrayList<String>)
 }
