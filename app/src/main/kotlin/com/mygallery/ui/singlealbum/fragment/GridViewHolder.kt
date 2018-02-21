@@ -1,4 +1,4 @@
-package com.mygallery.ui.singlealbum
+package com.mygallery.ui.singlealbum.fragment
 
 import android.view.View
 import com.bumptech.glide.Glide
@@ -9,10 +9,10 @@ import kotlinx.android.synthetic.main.item_single_album.view.*
  * @author lusinabrian on 17/02/18.
  * @Notes
  */
-class SingleAlbumViewHolder(itemView: View, val albumList: ArrayList<String>) : BaseViewHolder<String>(itemView) {
-    lateinit var callBack: SingleAlbumRecyclerAdapter.Callback
+class GridViewHolder(itemView: View, val albumList: ArrayList<String>) : BaseViewHolder<String>(itemView) {
+    lateinit var callBack: GridRecyclerAdapter.Callback
 
-    constructor(itemView: View, albumList: ArrayList<String>, callBack: SingleAlbumRecyclerAdapter.Callback)
+    constructor(itemView: View, albumList: ArrayList<String>, callBack: GridRecyclerAdapter.Callback)
             : this(itemView, albumList) {
         this.callBack = callBack
     }

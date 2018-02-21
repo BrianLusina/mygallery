@@ -16,8 +16,11 @@ import com.mygallery.ui.photo.PhotoPresenterImpl
 import com.mygallery.ui.photo.PhotoView
 import com.mygallery.ui.singlealbum.SingleAlbumPresenter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
-import com.mygallery.ui.singlealbum.SingleAlbumRecyclerAdapter
 import com.mygallery.ui.singlealbum.SingleAlbumView
+import com.mygallery.ui.singlealbum.fragment.GridPresenter
+import com.mygallery.ui.singlealbum.fragment.GridPresenterImpl
+import com.mygallery.ui.singlealbum.fragment.GridRecyclerAdapter
+import com.mygallery.ui.singlealbum.fragment.GridView
 import com.mygallery.ui.splash.SplashPresenter
 import com.mygallery.ui.splash.SplashPresenterImpl
 import com.mygallery.ui.splash.SplashView
@@ -78,8 +81,14 @@ class ActivityModule(val mActivity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideSingleAlbumAdapter(): SingleAlbumRecyclerAdapter {
-        return SingleAlbumRecyclerAdapter(arrayListOf())
+    @ActivityScope
+    fun provideGridPresenter(gridPresenter: GridPresenterImpl<GridView>): GridPresenter<GridView> {
+        return gridPresenter
+    }
+
+    @Provides
+    fun provideGridRecyclerAdapter(): GridRecyclerAdapter {
+        return GridRecyclerAdapter(arrayListOf())
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package com.mygallery.ui.singlealbum
+package com.mygallery.ui.singlealbum.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @author lusinabrian on 17/02/18.
  * @Notes Recycler Adapter for a single album
  */
-class SingleAlbumRecyclerAdapter
+class GridRecyclerAdapter
 @Inject
 constructor(private val albumList: ArrayList<String>) : BaseRecyclerAdapter<String>(albumList) {
 
@@ -19,7 +19,7 @@ constructor(private val albumList: ArrayList<String>) : BaseRecyclerAdapter<Stri
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<String> {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.item_single_album, parent, false)
-        return SingleAlbumViewHolder(v, albumList, callback)
+        return GridViewHolder(v, albumList, callback)
     }
 
     interface Callback {

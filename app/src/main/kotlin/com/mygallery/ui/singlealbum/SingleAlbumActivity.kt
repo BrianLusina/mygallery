@@ -1,33 +1,27 @@
 package com.mygallery.ui.singlealbum
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import com.mygallery.R
 import com.mygallery.ui.base.BaseActivity
-import com.mygallery.ui.photo.PhotoActivity
-import com.mygallery.utils.INTENT_KEY_PHOTO_ITEM_PATH
+import com.mygallery.ui.singlealbum.fragment.GridFragment
+import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
-import kotlinx.android.synthetic.main.activity_single_album.*
-import kotlinx.android.synthetic.main.toolbar_layout.*
-import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 /**
  * @author lusinabrian on 17/02/18.
  * @Notes This will display a Single Albums photos/videos
  */
-class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecyclerAdapter.Callback {
+class SingleAlbumActivity : BaseActivity(), SingleAlbumView {
 
     @Inject
-    lateinit var singleAlbumPresenter: SingleAlbumPresenter<SingleAlbumView>
-
-    @Inject
-    lateinit var singleAlbumRecyclerAdapter: SingleAlbumRecyclerAdapter
+    lateinit var gridPresenter: SingleAlbumPresenter<SingleAlbumView>
 
     companion object {
         const val KEY_SINGLE_ALBUM_FOLDER_NAME = "KEY_SINGLE_ALBUM_FOLDER_NAME"
         const val KEY_SINGLE_ALBUM_IS_VIDEO = "KEY_SINGLE_ALBUM_IS_VIDEO"
+        const val KEY_CURRENT_POSITION = "KEY_CURRENT_POSITION"
+        var currentPosition: Int = 0
     }
 
     var folderName = ""
@@ -41,26 +35,27 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
         activityComponent.injectSingleAlbumActivity(this)
 
         // attach your presenter
-        singleAlbumPresenter.onAttach(this)
-
-        singleAlbumRecyclerAdapter.callback = this
+        gridPresenter.onAttach(this)
 
         if (savedInstanceState != null) {
             folderName = savedInstanceState.getString(KEY_SINGLE_ALBUM_FOLDER_NAME)
             isVideo = savedInstanceState.getBoolean(KEY_SINGLE_ALBUM_IS_VIDEO)
-        } else {
-            singleAlbumPresenter.onRetrieveBundle()
+            currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, 0)
+            gridPresenter.onCreateView()
+            // return here to avoid adding additional Grid Fragments when changing orientation
+            return
         }
     }
 
     override fun onResume() {
         super.onResume()
-        singleAlbumPresenter.onResume()
+        gridPresenter.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         outState?.putString(KEY_SINGLE_ALBUM_FOLDER_NAME, folderName)
         outState?.putBoolean(KEY_SINGLE_ALBUM_IS_VIDEO, isVideo)
+        outState?.putInt(KEY_CURRENT_POSITION, currentPosition)
         super.onSaveInstanceState(outState)
     }
 
@@ -69,21 +64,29 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
         if (savedInstanceState != null) {
             folderName = savedInstanceState.getString(KEY_SINGLE_ALBUM_FOLDER_NAME)
             isVideo = savedInstanceState.getBoolean(KEY_SINGLE_ALBUM_IS_VIDEO)
+            currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, 0)
         }
     }
 
-    override fun setupRecyclerAdapter() {
-        recycler_view_single_album.layoutManager = GridLayoutManager(this, 2)
-        recycler_view_single_album.setHasFixedSize(true)
-        recycler_view_single_album.adapter = singleAlbumRecyclerAdapter
+    override fun setupFragment() {
+        val fragmentManager = supportFragmentManager
 
-        singleAlbumPresenter.onRecyclerViewSetup(folderName, isVideo)
-    }
+        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME) != null) {
+            folderName = intent.extras.getString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME)
+            isVideo = intent.extras.getBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO)
+        }
 
-    override fun setupToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = folderName
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // pass the current position to the Fragment along with the bundle data
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY_CURRENT_POSITION, currentPosition)
+        bundle.putBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO, isVideo)
+        bundle.putString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME, folderName)
+        val gridFragment = GridFragment()
+        gridFragment.arguments = bundle
+
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, gridFragment, GridFragment::class.simpleName)
+                .commit()
     }
 
     override fun retrieveBundleFromIntent() {
@@ -91,13 +94,5 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView, SingleAlbumRecycler
             folderName = intent.extras.getString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME)
             isVideo = intent.extras.getBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO)
         }
-    }
-
-    override fun addItemsToAdapter(imageList: ArrayList<String>) {
-        singleAlbumRecyclerAdapter.addItemsUsingDiff(imageList)
-    }
-
-    override fun onSinglePhotoClick(photoItemName: String) {
-        startActivity<PhotoActivity>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
     }
 }
