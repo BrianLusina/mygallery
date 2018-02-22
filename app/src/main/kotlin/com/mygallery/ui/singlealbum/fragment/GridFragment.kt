@@ -14,6 +14,7 @@ import com.mygallery.R
 import com.mygallery.ui.base.BaseFragment
 import com.mygallery.ui.photo.PhotoPagerFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
+import com.mygallery.utils.BUNDLE_KEY_IMAGE_ARRAY
 import com.mygallery.utils.INTENT_KEY_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_ALBUM_IS_VIDEO
 import org.jetbrains.anko.find
@@ -37,7 +38,7 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
     private var folderName = ""
     private var isVideo = false
     private var currentPosition: Int = 0
-
+    private var photoArrayList = arrayListOf<String>()
     private val enterTransitionStarted = AtomicBoolean()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,6 +124,7 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
     }
 
     override fun addItemsToAdapter(imageList: ArrayList<String>) {
+        photoArrayList = imageList
         gridRecyclerAdapter.addItemsUsingDiff(imageList)
     }
 
@@ -141,7 +143,7 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         val photoPagerFragment = PhotoPagerFragment()
         val bundle = Bundle()
         bundle.putInt(BUNDLE_KEY_CURRENT_POSITION, currentPosition)
-        //bundle.putString()
+        bundle.putStringArrayList(BUNDLE_KEY_IMAGE_ARRAY, photoArrayList)
         photoPagerFragment.arguments = bundle
 
         fragmentManager

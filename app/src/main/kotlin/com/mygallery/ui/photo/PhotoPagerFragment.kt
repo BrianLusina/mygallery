@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.mygallery.R
 import com.mygallery.ui.base.BaseFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
+import com.mygallery.utils.BUNDLE_KEY_IMAGE_ARRAY
 import javax.inject.Inject
 
 /**
@@ -33,18 +34,21 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
     var currentPosition : Int = 0
     // set a dummy photo count, this will be updated when we get the Bundle arguments
     var photoCount : Int = 20
-    var photoArrayList
+    var photoArrayList = arrayListOf<String>()
 
     companion object {
         const val KEY_CURRENT_POSITION = "KEY_CURRENT_POSITION"
+        const val KEY_PHOTO_ARR_LIST = "KEY_PHOTO_ARR_LIST"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         photoPagerPresenter.onCreate()
 
-        if (savedInstanceState != null)
+        if (savedInstanceState != null){
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
+            photoArrayList = savedInstanceState.getStringArrayList(KEY_PHOTO_ARR_LIST)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,8 +62,8 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
 
         viewPager.adapter = photoPagerAdapter
 
-        // TODO: set the count of the photoPagerAdapter
         photoPagerAdapter.photoCount = photoCount
+        photoPagerAdapter.photoArrayList = photoArrayList
 
         viewPager.currentItem = currentPosition
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
@@ -79,6 +83,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(KEY_CURRENT_POSITION, currentPosition)
+        outState.putStringArrayList(KEY_PHOTO_ARR_LIST, photoArrayList)
         super.onSaveInstanceState(outState)
     }
 
@@ -86,13 +91,15 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
         super.onViewStateRestored(savedInstanceState)
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
+            photoArrayList = savedInstanceState.getStringArrayList(KEY_PHOTO_ARR_LIST)
         }
     }
 
     override fun retrieveBundleFromArguments() {
         if(arguments != null){
             currentPosition = arguments!!.getInt(BUNDLE_KEY_CURRENT_POSITION)
-
+            photoArrayList = arguments!!.getStringArrayList(BUNDLE_KEY_IMAGE_ARRAY)
+            photoCount = photoArrayList.size
         }
     }
 

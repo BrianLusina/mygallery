@@ -13,9 +13,10 @@ class PhotoPagerAdapter
 @Inject
 constructor(childFragmentManager: FragmentManager) : FragmentStatePagerAdapter(childFragmentManager){
     var photoCount = 0
+    var photoArrayList = arrayListOf<String>()
 
     override fun getItem(position: Int): Fragment {
-
+        return PhotoFragment.newInstance(photoArrayList[position])
     }
 
     override fun getCount() = photoCount
