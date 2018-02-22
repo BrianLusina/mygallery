@@ -31,6 +31,9 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
     lateinit var viewPager : ViewPager
 
     var currentPosition : Int = 0
+    // set a dummy photo count, this will be updated when we get the Bundle arguments
+    var photoCount : Int = 20
+    var photoArrayList
 
     companion object {
         const val KEY_CURRENT_POSITION = "KEY_CURRENT_POSITION"
@@ -56,7 +59,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
         viewPager.adapter = photoPagerAdapter
 
         // TODO: set the count of the photoPagerAdapter
-        photoPagerAdapter.photoCount = 100
+        photoPagerAdapter.photoCount = photoCount
 
         viewPager.currentItem = currentPosition
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
@@ -65,7 +68,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
             }
         });
 
-        // TODO: prepare shared element transition
+        photoPagerPresenter.onPrepareSharedElementTransition()
 
         if(savedInstanceState == null){
             postponeEnterTransition()
@@ -89,6 +92,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
     override fun retrieveBundleFromArguments() {
         if(arguments != null){
             currentPosition = arguments!!.getInt(BUNDLE_KEY_CURRENT_POSITION)
+
         }
     }
 

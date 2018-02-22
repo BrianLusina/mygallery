@@ -14,8 +14,8 @@ import com.mygallery.R
 import com.mygallery.ui.base.BaseFragment
 import com.mygallery.ui.photo.PhotoPagerFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
-import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
-import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
+import com.mygallery.utils.INTENT_KEY_ALBUM_FOLDER_NAME
+import com.mygallery.utils.INTENT_KEY_ALBUM_IS_VIDEO
 import org.jetbrains.anko.find
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -45,7 +45,8 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         gridPresenter.onCreate()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
 
         activityComponent.injectGridFragment(this)
 
@@ -53,7 +54,8 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
 
         gridRecyclerAdapter.callback = this
 
-        recyclerView = inflater.inflate(R.layout.fragment_grid, container, false) as RecyclerView
+        recyclerView = inflater.inflate(R.layout.fragment_grid, container, false)
+                as RecyclerView
 
         // set adapter
         recyclerView.adapter = gridRecyclerAdapter
@@ -75,16 +77,18 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
 
     override fun retrieveBundleFromArguments() {
         if (arguments != null){
-            folderName = arguments!!.getString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME)
-            isVideo = arguments!!.getBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO)
+            folderName = arguments!!.getString(INTENT_KEY_ALBUM_FOLDER_NAME)
+            isVideo = arguments!!.getBoolean(INTENT_KEY_ALBUM_IS_VIDEO)
             currentPosition = arguments!!.getInt(BUNDLE_KEY_CURRENT_POSITION)
         }
     }
 
     override fun prepareTransitions() {
-        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.transition_grid_exit)
+        exitTransition = TransitionInflater.from(context).inflateTransition(
+                R.transition.transition_grid_exit)
         setExitSharedElementCallback(object : SharedElementCallback(){
-            override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
+            override fun onMapSharedElements(names: MutableList<String>?,
+                                             sharedElements: MutableMap<String, View>?) {
                 val selectedViewHolder = recyclerView.findViewHolderForAdapterPosition(currentPosition)
 
                 if(selectedViewHolder?.itemView == null){
@@ -92,7 +96,8 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
                 }
 
                 // map the first shared element to the child view
-                sharedElements?.put(names!![0], selectedViewHolder.itemView.findViewById(R.id.image_view_thumbnail))
+                sharedElements?.put(names!![0],
+                        selectedViewHolder.itemView.findViewById(R.id.image_view_thumbnail))
             }
         })
 
@@ -101,13 +106,14 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
 
     override fun scrollToPosition() {
         recyclerView.addOnLayoutChangeListener(object : View.OnLayoutChangeListener{
-            override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+            override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int,
+                                        oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                 recyclerView.removeOnLayoutChangeListener(this)
                 val layoutManager = recyclerView.layoutManager
                 val viewAtPosition = layoutManager.findViewByPosition(currentPosition)
 
-                // Scroll to position if the view for the current position is null (not currently part of
-                // layout manager children), or it's not completely visible.
+                // Scroll to position if the view for the current position is null (not currently
+                // part of layout manager children), or it's not completely visible.
                 if(viewAtPosition == null || layoutManager.isViewPartiallyVisible(
                                 viewAtPosition, false, true)){
                     recyclerView.post { layoutManager.scrollToPosition(currentPosition) }
@@ -120,26 +126,29 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         gridRecyclerAdapter.addItemsUsingDiff(imageList)
     }
 
-//    override fun onItemClick(photoItemName: String) {
-//        startActivity<PhotoPagerFragment>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
-//    }
-
     @SuppressLint("NewApi")
     override fun onItemClick(view: View, adapterPosition: Int) {
         // update the position
         currentPosition = adapterPosition
 
-        // Exclude the clicked card from the exit transition (e.g. the card will disappear immediately
-        // instead of fading out with the rest to prevent an overlapping animation of fade and move).
+        // Exclude the clicked card from the exit transition (e.g. the card will disappear
+        // immediately instead of fading out with the rest to prevent an
+        // overlapping animation of fade and move).
         (exitTransition as TransitionSet).excludeTarget(view, true)
 
         val transitioningView = view.find<ImageView>(R.id.image_view_thumbnail)
+
+        val photoPagerFragment = PhotoPagerFragment()
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY_CURRENT_POSITION, currentPosition)
+        //bundle.putString()
+        photoPagerFragment.arguments = bundle
 
         fragmentManager
                 ?.beginTransaction()
                 ?.setReorderingAllowed(true) // Optimize for shared element transition
                 ?.addSharedElement(transitioningView, transitioningView.transitionName)
-                ?.replace(R.id.fragment_container, PhotoPagerFragment(), PhotoPagerFragment::class
+                ?.replace(R.id.fragment_container, photoPagerFragment, PhotoPagerFragment::class
                         .simpleName)
                 ?.addToBackStack(null)
                 ?.commit()

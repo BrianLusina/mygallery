@@ -4,8 +4,8 @@ import android.os.Bundle
 import com.mygallery.ui.base.BaseActivity
 import com.mygallery.ui.singlealbum.fragment.GridFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
-import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
-import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
+import com.mygallery.utils.INTENT_KEY_ALBUM_FOLDER_NAME
+import com.mygallery.utils.INTENT_KEY_ALBUM_IS_VIDEO
 import javax.inject.Inject
 
 /**
@@ -71,16 +71,16 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView {
     override fun setupFragment() {
         val fragmentManager = supportFragmentManager
 
-        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME) != null) {
-            folderName = intent.extras.getString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME)
-            isVideo = intent.extras.getBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO)
+        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_ALBUM_FOLDER_NAME) != null) {
+            folderName = intent.extras.getString(INTENT_KEY_ALBUM_FOLDER_NAME)
+            isVideo = intent.extras.getBoolean(INTENT_KEY_ALBUM_IS_VIDEO)
         }
 
         // pass the current position to the Fragment along with the bundle data
         val bundle = Bundle()
         bundle.putInt(BUNDLE_KEY_CURRENT_POSITION, currentPosition)
-        bundle.putBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO, isVideo)
-        bundle.putString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME, folderName)
+        bundle.putBoolean(INTENT_KEY_ALBUM_IS_VIDEO, isVideo)
+        bundle.putString(INTENT_KEY_ALBUM_FOLDER_NAME, folderName)
         val gridFragment = GridFragment()
         gridFragment.arguments = bundle
 
@@ -90,9 +90,9 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView {
     }
 
     override fun retrieveBundleFromIntent() {
-        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME) != null) {
-            folderName = intent.extras.getString(INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME)
-            isVideo = intent.extras.getBoolean(INTENT_KEY_SINGLE_ALBUM_IS_VIDEO)
+        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_ALBUM_FOLDER_NAME) != null) {
+            folderName = intent.extras.getString(INTENT_KEY_ALBUM_FOLDER_NAME)
+            isVideo = intent.extras.getBoolean(INTENT_KEY_ALBUM_IS_VIDEO)
         }
     }
 }

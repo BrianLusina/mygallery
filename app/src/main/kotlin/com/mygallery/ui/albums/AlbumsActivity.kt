@@ -15,8 +15,8 @@ import com.mygallery.data.models.AlbumModel
 import com.mygallery.ui.base.BaseActivity
 import com.mygallery.ui.singlealbum.SingleAlbumActivity
 import com.mygallery.utils.INTENT_KEY_ALBUM_URL_DATA
-import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
-import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
+import com.mygallery.utils.INTENT_KEY_ALBUM_FOLDER_NAME
+import com.mygallery.utils.INTENT_KEY_ALBUM_IS_VIDEO
 import com.mygallery.utils.OPEN_SOURCE_URL
 import kotlinx.android.synthetic.main.activity_albums.*
 import kotlinx.android.synthetic.main.content_albums.*
@@ -176,8 +176,8 @@ class AlbumsActivity : BaseActivity(), AlbumsView, View.OnClickListener,
 
     override fun onAlbumFolderClicked(folderName: String, isVideo: Boolean) {
         startActivity<SingleAlbumActivity>(
-                INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME to folderName,
-                INTENT_KEY_SINGLE_ALBUM_IS_VIDEO to isVideo
+                INTENT_KEY_ALBUM_FOLDER_NAME to folderName,
+                INTENT_KEY_ALBUM_IS_VIDEO to isVideo
         )
     }
 
