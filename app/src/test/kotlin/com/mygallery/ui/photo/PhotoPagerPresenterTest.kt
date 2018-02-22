@@ -18,17 +18,17 @@ import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * @author lusinabrian on 17/02/18
- * @Notes Tests for PhotoPresenterTest
+ * @Notes Tests for PhotoPagerPresenterTest
  * This will check if the expected methods on the view are called as expected
  */
 @RunWith(MockitoJUnitRunner::class)
-class PhotoPresenterTest {
+class PhotoPagerPresenterTest {
     @Mock
-    lateinit var mockPhotoView: PhotoView
+    lateinit var mockPhotoPagerView: PhotoPagerView
     @Mock
     lateinit var mockDataManager: DataManager
 
-    lateinit var photoPresenter: PhotoPresenter<PhotoView>
+    lateinit var photoPagerPagerPresenter: PhotoPagerPresenter<PhotoPagerView>
     val testScheduler = TestScheduler()
 
     companion object {
@@ -50,30 +50,30 @@ class PhotoPresenterTest {
         val compositeDisposable = CompositeDisposable()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        photoPresenter = PhotoPresenterImpl(mockDataManager, compositeDisposable, testSchedulerProvider)
-        photoPresenter.onAttach(mockPhotoView)
+        photoPagerPagerPresenter = PhotoPagerPresenterImpl(mockDataManager, compositeDisposable, testSchedulerProvider)
+        photoPagerPagerPresenter.onAttach(mockPhotoPagerView)
     }
 
     @After
     @Throws(Exception::class)
     fun tearDown() {
 
-        photoPresenter.onDetach()
+        photoPagerPagerPresenter.onDetach()
         RxAndroidPlugins.reset()
     }
 
     @Test
     fun testOnResumeInitializesView() {
-        photoPresenter.onResume()
+        photoPagerPagerPresenter.onResume()
 
-        verify(mockPhotoView, times(1)).setupToolbar()
-        verify(mockPhotoView, times(1)).setupFullScreenImage()
+        verify(mockPhotoPagerView, times(1)).setupToolbar()
+        verify(mockPhotoPagerView, times(1)).setupFullScreenImage()
     }
 
     @Test
     fun testOnRetrieveBundleReceivesIntent(){
-        photoPresenter.onRetrieveBundle()
+        photoPagerPagerPresenter.onRetrieveBundle()
 
-        verify(mockPhotoView, times(1)).retrieveBundleFromIntent()
+        verify(mockPhotoPagerView, times(1)).retrieveBundleFromArguments()
     }
 }

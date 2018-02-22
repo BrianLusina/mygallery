@@ -3,7 +3,7 @@ package com.mygallery.di.components
 import com.mygallery.di.modules.ActivityModule
 import com.mygallery.di.scopes.ActivityScope
 import com.mygallery.ui.albums.AlbumsActivity
-import com.mygallery.ui.photo.PhotoActivity
+import com.mygallery.ui.photo.PhotoPagerFragment
 import com.mygallery.ui.singlealbum.fragment.GridFragment
 import com.mygallery.ui.singlealbum.SingleAlbumActivity
 import com.mygallery.ui.splash.SplashActivity
@@ -21,5 +21,5 @@ interface ActivityComponent {
 
     fun injectGridFragment(gridFragment: GridFragment)
 
-    fun injectPhotoActivity(photoActivity: PhotoActivity)
+    fun injectPhotoPagerFragment(photoPagerFragment: PhotoPagerFragment)
 }

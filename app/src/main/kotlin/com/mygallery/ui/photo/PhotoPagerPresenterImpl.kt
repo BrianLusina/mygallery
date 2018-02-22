@@ -11,20 +11,19 @@ import javax.inject.Inject
  * @notes: Presenter layer to interact with data and view
  */
 
-class PhotoPresenterImpl<V : PhotoView>
+class PhotoPagerPresenterImpl<V : PhotoPagerView>
 @Inject
 constructor(dataManager: DataManager,
             compositeDisposable: CompositeDisposable,
             schedulerProvider: SchedulerProvider
-) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), PhotoPresenter<V> {
+) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), PhotoPagerPresenter<V> {
 
-    override fun onResume() {
-        baseView.setupToolbar()
-        baseView.setupFullScreenImage()
+    override fun onPrepareSharedElementTransition() {
+        baseView.prepareSharedElementTransition()
     }
 
     override fun onRetrieveBundle() {
-        baseView.retrieveBundleFromIntent()
+        baseView.retrieveBundleFromArguments()
     }
 
 }

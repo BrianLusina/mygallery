@@ -74,10 +74,6 @@ abstract class BaseFragment : Fragment(), BaseView {
         get() = baseActivity!!.activityComponent
 
     /**
-     * Used to setup views in this fragment */
-    protected abstract fun setUp(view: View)
-
-    /**
      * before destroying the fragment, check if the attached view in the hierarchy are still bound and
      * unbind them */
     override fun onDestroy() {

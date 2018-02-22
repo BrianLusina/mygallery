@@ -11,9 +11,10 @@ import com.mygallery.ui.albums.AlbumsPresenter
 import com.mygallery.ui.albums.AlbumsPresenterImpl
 import com.mygallery.ui.albums.AlbumsRecyclerAdapter
 import com.mygallery.ui.albums.AlbumsView
-import com.mygallery.ui.photo.PhotoPresenter
-import com.mygallery.ui.photo.PhotoPresenterImpl
-import com.mygallery.ui.photo.PhotoView
+import com.mygallery.ui.photo.PhotoPagerPresenter
+import com.mygallery.ui.photo.PhotoPagerPresenterImpl
+import com.mygallery.ui.photo.PhotoPagerView
+import com.mygallery.ui.photo.PhotoPagerAdapter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
 import com.mygallery.ui.singlealbum.SingleAlbumView
@@ -33,17 +34,17 @@ import io.reactivex.disposables.CompositeDisposable
  * @Notes module for activities
  */
 @Module
-class ActivityModule(val mActivity: AppCompatActivity) {
+class ActivityModule(val activity: AppCompatActivity) {
 
     @Provides
     @ActivityCtxQualifier
     fun provideContext(): Context {
-        return mActivity
+        return activity
     }
 
     @Provides
     fun provideActivity(): Activity {
-        return mActivity
+        return activity
     }
 
     @Provides
@@ -93,7 +94,12 @@ class ActivityModule(val mActivity: AppCompatActivity) {
 
     @Provides
     @ActivityScope
-    fun providePhotoPresenter(photoPresenter: PhotoPresenterImpl<PhotoView>): PhotoPresenter<PhotoView> {
-        return photoPresenter
+    fun providePhotoPagerPresenter(photoPagerPresenter: PhotoPagerPresenterImpl<PhotoPagerView>): PhotoPagerPresenter<PhotoPagerView> {
+        return photoPagerPresenter
+    }
+
+    @Provides
+    fun providePhotoPagerAdapter(): PhotoPagerAdapter {
+        return PhotoPagerAdapter(activity.supportFragmentManager)
     }
 }

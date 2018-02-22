@@ -1,5 +1,6 @@
 package com.mygallery.ui.singlealbum.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.transition.TransitionInflater
 import android.support.transition.TransitionSet
@@ -9,10 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.mygallery.R
 import com.mygallery.ui.base.BaseFragment
-import com.mygallery.ui.photo.PhotoActivity
+import com.mygallery.ui.photo.PhotoPagerFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
-import com.mygallery.utils.INTENT_KEY_PHOTO_ITEM_PATH
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
 import org.jetbrains.anko.find
@@ -52,7 +53,7 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
 
         gridRecyclerAdapter.callback = this
 
-        recyclerView = inflater.inflate(R.layout.fragment_grid, container, false)
+        recyclerView = inflater.inflate(R.layout.fragment_grid, container, false) as RecyclerView
 
         // set adapter
         recyclerView.adapter = gridRecyclerAdapter
@@ -81,7 +82,7 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
     }
 
     override fun prepareTransitions() {
-        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition_grid_exit)
+        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.transition_grid_exit)
         setExitSharedElementCallback(object : SharedElementCallback(){
             override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
                 val selectedViewHolder = recyclerView.findViewHolderForAdapterPosition(currentPosition)
@@ -115,18 +116,15 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         })
     }
 
-    override fun setUp(view: View) {
-
-    }
-
     override fun addItemsToAdapter(imageList: ArrayList<String>) {
         gridRecyclerAdapter.addItemsUsingDiff(imageList)
     }
 
 //    override fun onItemClick(photoItemName: String) {
-//        startActivity<PhotoActivity>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
+//        startActivity<PhotoPagerFragment>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
 //    }
 
+    @SuppressLint("NewApi")
     override fun onItemClick(view: View, adapterPosition: Int) {
         // update the position
         currentPosition = adapterPosition
@@ -138,13 +136,13 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         val transitioningView = view.find<ImageView>(R.id.image_view_thumbnail)
 
         fragmentManager
-                .beginTransaction()
-                .setReorderingAllowed(true) // Optimize for shared element transition
-                .addSharedElement(transitioningView, transitioningView.transitionName)
-                .replace(R.id.fragment_container, ImagePagerFragment(), ImagePagerFragment::class
+                ?.beginTransaction()
+                ?.setReorderingAllowed(true) // Optimize for shared element transition
+                ?.addSharedElement(transitioningView, transitioningView.transitionName)
+                ?.replace(R.id.fragment_container, PhotoPagerFragment(), PhotoPagerFragment::class
                         .simpleName)
-                .addToBackStack(null)
-                .commit()
+                ?.addToBackStack(null)
+                ?.commit()
     }
 
     override fun onLoadComplete(imageView: ImageView, adapterPosition: Int) {
