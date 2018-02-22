@@ -1,4 +1,4 @@
-package com.mygallery.ui.singlealbum.fragment
+package com.mygallery.ui.singlealbum.grid
 
 import android.os.Build
 import android.view.View

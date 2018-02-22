@@ -19,11 +19,11 @@ constructor(dataManager: DataManager,
 ) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), SingleAlbumPresenter<V> {
 
     override fun onCreateView() {
-        baseView.setupFragment()
+        baseView.retrieveBundleFromIntent()
     }
 
     override fun onResume() {
-        baseView.retrieveBundleFromIntent()
+        baseView.setupFragment()
     }
 }
 

@@ -1,10 +1,8 @@
-package com.mygallery.ui.singlealbum.fragment
+package com.mygallery.ui.singlealbum.grid
 
 import com.mygallery.ui.base.BasePresenter
 
 interface GridPresenter<V : GridView> : BasePresenter<V> {
-
-    fun onCreate()
 
     fun onCreateView()
 

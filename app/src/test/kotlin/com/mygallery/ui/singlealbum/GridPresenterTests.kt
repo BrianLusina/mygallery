@@ -1,9 +1,9 @@
 import android.content.Context
 import com.mygallery.data.DataManager
 import com.mygallery.data.io.TestSchedulerProvider
-import com.mygallery.ui.singlealbum.fragment.GridPresenter
-import com.mygallery.ui.singlealbum.fragment.GridPresenterImpl
-import com.mygallery.ui.singlealbum.fragment.GridView
+import com.mygallery.ui.singlealbum.grid.GridPresenter
+import com.mygallery.ui.singlealbum.grid.GridPresenterImpl
+import com.mygallery.ui.singlealbum.grid.GridView
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

@@ -43,7 +43,6 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        photoPagerPresenter.onCreate()
 
         if (savedInstanceState != null){
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)

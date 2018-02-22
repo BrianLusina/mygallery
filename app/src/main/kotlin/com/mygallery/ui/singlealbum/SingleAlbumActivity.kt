@@ -1,8 +1,9 @@
 package com.mygallery.ui.singlealbum
 
 import android.os.Bundle
+import com.mygallery.R
 import com.mygallery.ui.base.BaseActivity
-import com.mygallery.ui.singlealbum.fragment.GridFragment
+import com.mygallery.ui.singlealbum.grid.GridFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
 import com.mygallery.utils.INTENT_KEY_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_ALBUM_IS_VIDEO
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class SingleAlbumActivity : BaseActivity(), SingleAlbumView {
 
     @Inject
-    lateinit var gridPresenter: SingleAlbumPresenter<SingleAlbumView>
+    lateinit var singleAlbumPresenter: SingleAlbumPresenter<SingleAlbumView>
 
     companion object {
         const val KEY_SINGLE_ALBUM_FOLDER_NAME = "KEY_SINGLE_ALBUM_FOLDER_NAME"
@@ -35,21 +36,22 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView {
         activityComponent.injectSingleAlbumActivity(this)
 
         // attach your presenter
-        gridPresenter.onAttach(this)
+        singleAlbumPresenter.onAttach(this)
 
         if (savedInstanceState != null) {
             folderName = savedInstanceState.getString(KEY_SINGLE_ALBUM_FOLDER_NAME)
             isVideo = savedInstanceState.getBoolean(KEY_SINGLE_ALBUM_IS_VIDEO)
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, 0)
-            gridPresenter.onCreateView()
             // return here to avoid adding additional Grid Fragments when changing orientation
             return
         }
+
+        singleAlbumPresenter.onCreateView()
     }
 
     override fun onResume() {
         super.onResume()
-        gridPresenter.onResume()
+        singleAlbumPresenter.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -70,11 +72,6 @@ class SingleAlbumActivity : BaseActivity(), SingleAlbumView {
 
     override fun setupFragment() {
         val fragmentManager = supportFragmentManager
-
-        if (intent.extras != null || intent.getBundleExtra(INTENT_KEY_ALBUM_FOLDER_NAME) != null) {
-            folderName = intent.extras.getString(INTENT_KEY_ALBUM_FOLDER_NAME)
-            isVideo = intent.extras.getBoolean(INTENT_KEY_ALBUM_IS_VIDEO)
-        }
 
         // pass the current position to the Fragment along with the bundle data
         val bundle = Bundle()

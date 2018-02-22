@@ -18,10 +18,10 @@ import com.mygallery.ui.photo.PhotoPagerAdapter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
 import com.mygallery.ui.singlealbum.SingleAlbumView
-import com.mygallery.ui.singlealbum.fragment.GridPresenter
-import com.mygallery.ui.singlealbum.fragment.GridPresenterImpl
-import com.mygallery.ui.singlealbum.fragment.GridRecyclerAdapter
-import com.mygallery.ui.singlealbum.fragment.GridView
+import com.mygallery.ui.singlealbum.grid.GridPresenter
+import com.mygallery.ui.singlealbum.grid.GridPresenterImpl
+import com.mygallery.ui.singlealbum.grid.GridRecyclerAdapter
+import com.mygallery.ui.singlealbum.grid.GridView
 import com.mygallery.ui.splash.SplashPresenter
 import com.mygallery.ui.splash.SplashPresenterImpl
 import com.mygallery.ui.splash.SplashView

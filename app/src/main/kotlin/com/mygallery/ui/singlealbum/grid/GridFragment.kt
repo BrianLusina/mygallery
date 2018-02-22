@@ -1,4 +1,4 @@
-package com.mygallery.ui.singlealbum.fragment
+package com.mygallery.ui.singlealbum.grid
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -17,6 +17,7 @@ import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
 import com.mygallery.utils.BUNDLE_KEY_IMAGE_ARRAY
 import com.mygallery.utils.INTENT_KEY_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_ALBUM_IS_VIDEO
+import kotlinx.android.synthetic.main.fragment_grid.view.*
 import org.jetbrains.anko.find
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -33,18 +34,14 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
     @Inject
     lateinit var gridRecyclerAdapter: GridRecyclerAdapter
 
-    lateinit var recyclerView : RecyclerView
+    lateinit var gridView : View
+    // lateinit var recyclerView : RecyclerView
 
     private var folderName = ""
     private var isVideo = false
     private var currentPosition: Int = 0
     private var photoArrayList = arrayListOf<String>()
     private val enterTransitionStarted = AtomicBoolean()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        gridPresenter.onCreate()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -55,15 +52,18 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
 
         gridRecyclerAdapter.callback = this
 
-        recyclerView = inflater.inflate(R.layout.fragment_grid, container, false)
-                as RecyclerView
+        gridView = inflater.inflate(R.layout.fragment_grid, container, false)
 
         // set adapter
-        recyclerView.adapter = gridRecyclerAdapter
+        with(gridView){
+            recycler_view_single_album.adapter = gridRecyclerAdapter
+        }
+
+        //fixme: Caused by: java.lang.NullPointerException: Attempt to invoke virtual method 'int java.util.ArrayList.size()' on a null object reference
 
         gridPresenter.onCreateView()
 
-        return recyclerView
+        return gridView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,7 +90,8 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         setExitSharedElementCallback(object : SharedElementCallback(){
             override fun onMapSharedElements(names: MutableList<String>?,
                                              sharedElements: MutableMap<String, View>?) {
-                val selectedViewHolder = recyclerView.findViewHolderForAdapterPosition(currentPosition)
+                val selectedViewHolder = gridView.recycler_view_single_album
+                        .findViewHolderForAdapterPosition(currentPosition)
 
                 if(selectedViewHolder?.itemView == null){
                     return
@@ -106,18 +107,22 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
     }
 
     override fun scrollToPosition() {
-        recyclerView.addOnLayoutChangeListener(object : View.OnLayoutChangeListener{
+        gridView.recycler_view_single_album.addOnLayoutChangeListener(object : View.OnLayoutChangeListener{
             override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int,
                                         oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                recyclerView.removeOnLayoutChangeListener(this)
-                val layoutManager = recyclerView.layoutManager
-                val viewAtPosition = layoutManager.findViewByPosition(currentPosition)
 
-                // Scroll to position if the view for the current position is null (not currently
-                // part of layout manager children), or it's not completely visible.
-                if(viewAtPosition == null || layoutManager.isViewPartiallyVisible(
-                                viewAtPosition, false, true)){
-                    recyclerView.post { layoutManager.scrollToPosition(currentPosition) }
+                gridView.recycler_view_single_album.removeOnLayoutChangeListener(this)
+
+                with(gridView){
+                    val layoutManager = recycler_view_single_album.layoutManager
+                    val viewAtPosition = layoutManager.findViewByPosition(currentPosition)
+
+                    // Scroll to position if the view for the current position is null (not currently
+                    // part of layout manager children), or it's not completely visible.
+                    if(viewAtPosition == null || layoutManager.isViewPartiallyVisible(
+                                    viewAtPosition, false, true)){
+                        recycler_view_single_album.post { layoutManager.scrollToPosition(currentPosition) }
+                    }
                 }
             }
         })

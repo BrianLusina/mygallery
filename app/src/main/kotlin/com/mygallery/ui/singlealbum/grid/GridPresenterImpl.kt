@@ -1,4 +1,4 @@
-package com.mygallery.ui.singlealbum.fragment
+package com.mygallery.ui.singlealbum.grid
 
 import com.mygallery.data.DataManager
 import com.mygallery.data.io.SchedulerProvider
@@ -18,11 +18,8 @@ constructor(dataManager: DataManager,
             schedulerProvider: SchedulerProvider
 ) : BasePresenterImpl<V>(dataManager, schedulerProvider, compositeDisposable), GridPresenter<V> {
 
-    override fun onCreate() {
-        baseView.retrieveBundleFromArguments()
-    }
-
     override fun onCreateView() {
+        baseView.retrieveBundleFromArguments()
         // prepare transitions
         baseView.prepareTransitions()
     }
