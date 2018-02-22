@@ -2,17 +2,21 @@ package com.mygallery.ui.singlealbum.fragment
 
 import android.os.Bundle
 import android.support.transition.TransitionInflater
+import android.support.transition.TransitionSet
 import android.support.v4.app.SharedElementCallback
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.mygallery.ui.base.BaseFragment
 import com.mygallery.ui.photo.PhotoActivity
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
 import com.mygallery.utils.INTENT_KEY_PHOTO_ITEM_PATH
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_FOLDER_NAME
 import com.mygallery.utils.INTENT_KEY_SINGLE_ALBUM_IS_VIDEO
+import org.jetbrains.anko.find
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 /**
@@ -32,6 +36,8 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
     private var folderName = ""
     private var isVideo = false
     private var currentPosition: Int = 0
+
+    private val enterTransitionStarted = AtomicBoolean()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,8 +123,41 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         gridRecyclerAdapter.addItemsUsingDiff(imageList)
     }
 
-    override fun onSinglePhotoClick(photoItemName: String) {
-        startActivity<PhotoActivity>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
+//    override fun onItemClick(photoItemName: String) {
+//        startActivity<PhotoActivity>(INTENT_KEY_PHOTO_ITEM_PATH to photoItemName)
+//    }
+
+    override fun onItemClick(view: View, adapterPosition: Int) {
+        // update the position
+        currentPosition = adapterPosition
+
+        // Exclude the clicked card from the exit transition (e.g. the card will disappear immediately
+        // instead of fading out with the rest to prevent an overlapping animation of fade and move).
+        (exitTransition as TransitionSet).excludeTarget(view, true)
+
+        val transitioningView = view.find<ImageView>(R.id.image_view_thumbnail)
+
+        fragmentManager
+                .beginTransaction()
+                .setReorderingAllowed(true) // Optimize for shared element transition
+                .addSharedElement(transitioningView, transitioningView.transitionName)
+                .replace(R.id.fragment_container, ImagePagerFragment(), ImagePagerFragment::class
+                        .simpleName)
+                .addToBackStack(null)
+                .commit()
+    }
+
+    override fun onLoadComplete(imageView: ImageView, adapterPosition: Int) {
+        // Call startPostponedEnterTransition only when the 'selected' image loading is completed.
+        if(currentPosition != adapterPosition){
+            return
+        }
+
+        if(enterTransitionStarted.getAndSet(true)){
+            return
+        }
+
+        startPostponedEnterTransition()
     }
 
     override fun setupRecyclerAdapter() {

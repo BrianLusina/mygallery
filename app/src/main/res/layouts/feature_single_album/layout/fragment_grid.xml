@@ -20,6 +20,6 @@
         android:scrollbars="vertical"
         app:layoutManager="GridLayoutManager"
         app:spanCount="@integer/grid_span_count"
-        tools:listitem="@layout/item_single_album"/>
+        tools:listitem="@layout/item_grid"/>
 </android.support.design.widget.CoordinatorLayout>
 

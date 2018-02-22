@@ -36,7 +36,6 @@ constructor(dataManager: DataManager,
         baseView.setupRecyclerAdapter()
     }
 
-
     override fun onRecyclerViewSetup(folderName: String, isVideo: Boolean) {
         val imageList = dataManager.getAllShownImagesPath(folderName, isVideo)
         baseView.addItemsToAdapter(imageList)
