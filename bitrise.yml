@@ -30,7 +30,6 @@ workflows:
                         - cache-pull@2.0.1: {}
                         - script@1.1.5:
                                 title: Setup the build process
-                        - install-missing-android-tools@2.1.1: {}
                         - file-downloader:
                                 inputs:
                                         - source: $BITRISEIO_GRADLE_PROPERTIES_URL
@@ -43,6 +42,8 @@ workflows:
                                 inputs:
                                         - source: $BITRISEIO_PUBLISH_KEY_URL
                                         - destination: "$HOME/$BITRISE_SOURCE_DIR/keystores/publish_key.json"
+
+                        - install-missing-android-tools@2.1.1: {}
                         - gradle-runner@1.8.2:
                                 inputs:
                                         - gradle_file : "$GRADLE_BUILD_FILE_PATH"
