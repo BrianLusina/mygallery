@@ -74,16 +74,17 @@ android {
             signingConfig signingConfigs.release
             resValue "string", "app_name", "MyGallery"
             proguardFiles getDefaultProguardFile("proguard-android.txt"),
-                    "proguard-rules.pro",
-                    "proguard-reactive.pro",
-                    "proguard-dagger.pro",
-                    "proguard-anko.pro",
-                    "proguard-crashlytics.pro"
+                    "proguard/proguard-rules.pro",
+                    "proguard/proguard-reactive.pro",
+                    "proguard/proguard-dagger.pro",
+                    "proguard/proguard-anko.pro",
+                    "proguard/proguard-crashlytics.pro",
+                    "proguard/proguard-dialogs.pro"
         }
         debug {
             debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard/proguard-rules.pro"
             applicationIdSuffix ".debug"
             testCoverageEnabled true
             resValue "string", "app_name", "MyGallery-dev"
