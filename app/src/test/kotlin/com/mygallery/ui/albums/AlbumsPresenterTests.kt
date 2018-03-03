@@ -99,4 +99,11 @@ class AlbumsPresenterTests {
 
         verify(mockAlbumsView, times(1)).setupMenuIconOnDrawer()
     }
+
+    @Test
+    fun testOnOpenSourceMenuItemClicked(){
+        albumsPresenter.onOpenSourceMenuClicked()
+
+        verify(mockAlbumsView, times(1)).openGithubPage()
+    }
 }

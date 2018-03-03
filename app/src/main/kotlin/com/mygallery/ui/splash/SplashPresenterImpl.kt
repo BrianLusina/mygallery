@@ -35,5 +35,5 @@ constructor(dataManager: DataManager,
     override fun onStoragePermissionDenied() {
         baseView.displayPermissionRationale()
     }
-
 }
+

@@ -37,7 +37,7 @@ class AppModule(private val mApplication: Application) {
 
     @Provides
     @PreferenceInfo
-    fun provideSharedPrefsName(): String{
+    fun provideSharedPrefsName(): String {
         return SHARED_PREFS_NAME
     }
 
@@ -61,7 +61,7 @@ class AppModule(private val mApplication: Application) {
 
     @Provides
     @Named("NetworkSubject")
-    fun provideNetworkSubject() : PublishSubject<Boolean>{
+    fun provideNetworkSubject(): PublishSubject<Boolean> {
         return PublishSubject.create()
     }
 }

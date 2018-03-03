@@ -18,4 +18,13 @@
             android:id="@+id/nav_hidden_folders"
             android:title="@string/nav_title_hidden_folders"/>
     </group>
+
+    <!--open source-->
+    <group
+        android:id="@+id/nav_menu_open_source"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_open_source"
+            android:title="@string/nav_title_open_source"/>
+    </group>
 </menu>

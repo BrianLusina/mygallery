@@ -6,6 +6,7 @@
 app/docs/
 *.jks
 /build
+reports/
 keystores/keystore.properties
 keystores/publish_key.json
 /captures

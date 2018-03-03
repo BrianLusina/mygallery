@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!--Toolbar layout-->
-    <include
-        android:id="@+id/toolbar_include"
-        layout="@layout/toolbar_layout" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_single_album"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:clipToPadding="false"
-        tools:listitem="@layout/item_single_album"/>
-</android.support.design.widget.CoordinatorLayout>
-
+    android:layout_height="match_parent"/>

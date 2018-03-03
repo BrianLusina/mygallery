@@ -1,7 +1,5 @@
 package com.mygallery.ui.base
 
-import android.support.annotation.StringRes
-
 /**
  * @author lusinabrian on 01/04/17
  * * Base interface that any class that wants to act as a View in the MVP (Model View Presenter)

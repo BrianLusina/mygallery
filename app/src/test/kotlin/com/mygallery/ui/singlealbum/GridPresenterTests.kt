@@ -1,9 +1,9 @@
 import android.content.Context
 import com.mygallery.data.DataManager
 import com.mygallery.data.io.TestSchedulerProvider
-import com.mygallery.ui.singlealbum.SingleAlbumPresenter
-import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
-import com.mygallery.ui.singlealbum.SingleAlbumView
+import com.mygallery.ui.singlealbum.grid.GridPresenter
+import com.mygallery.ui.singlealbum.grid.GridPresenterImpl
+import com.mygallery.ui.singlealbum.grid.GridView
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -21,17 +21,17 @@ import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * @author lusinabrian on 17/02/18
- * @Notes Tests for SingleAlbumPresenterTests
+ * @Notes Tests for GridPresenterTests
  * This will check if the expected methods on the view are called as expected
  */
 @RunWith(MockitoJUnitRunner::class)
-class SingleAlbumPresenterTests {
+class GridPresenterTests {
 
-    @Mock lateinit var mockSingleAlbumView : SingleAlbumView
+    @Mock lateinit var mockGridView: GridView
     @Mock lateinit var mockDataManager: DataManager
     @Mock lateinit var mockedContext: Context
 
-    lateinit var singleAlbumPresenter : SingleAlbumPresenter<SingleAlbumView>
+    lateinit var gridPresenter: GridPresenter<GridView>
     val testScheduler = TestScheduler()
 
     companion object {
@@ -53,40 +53,48 @@ class SingleAlbumPresenterTests {
         val compositeDisposable = CompositeDisposable()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        singleAlbumPresenter = SingleAlbumPresenterImpl(mockDataManager, compositeDisposable, testSchedulerProvider)
-        singleAlbumPresenter.onAttach(mockSingleAlbumView)
+        gridPresenter = GridPresenterImpl(mockDataManager, compositeDisposable, testSchedulerProvider)
+        gridPresenter.onAttach(mockGridView)
     }
 
     @After
     @Throws(Exception::class)
     fun tearDown() {
-        singleAlbumPresenter.onDetach()
+        gridPresenter.onDetach()
         RxAndroidPlugins.reset()
     }
 
     @Test
     fun testOnResumeSetsUpViews(){
-        singleAlbumPresenter.onResume()
+        gridPresenter.onResume()
 
-        verify(mockSingleAlbumView, times(1)).setupToolbar()
-        verify(mockSingleAlbumView, times(1)).setupRecyclerAdapter()
+        verify(mockGridView, times(1)).setupToolbar()
+        verify(mockGridView, times(1)).setupRecyclerAdapter()
     }
 
     @Test
-    fun testOnRetrieveBundleReceivesIntent(){
-        singleAlbumPresenter.onRetrieveBundle()
+    fun testOnCreateView(){
+        gridPresenter.onCreateView()
 
-        verify(mockSingleAlbumView, times(1)).retrieveBundleFromIntent()
+        verify(mockGridView, times(1)).retrieveBundleFromArguments()
+        verify(mockGridView, times(1)).prepareTransitions()
+    }
+
+    @Test
+    fun testOnViewCreated(){
+        gridPresenter.onViewCreated()
+
+        verify(mockGridView, times(1)).scrollToPosition()
     }
 
     @Test
     fun testOnRecyclerViewSetup(){
-        singleAlbumPresenter.onRecyclerViewSetup("Camera", false)
+        gridPresenter.onRecyclerViewSetup("Camera", false)
 
         // verify that the data manager is called
         verify(mockDataManager, times(1)).getAllShownImagesPath("Camera", false)
 
         // verify that the view is called to setup adapter items
-        verify(mockSingleAlbumView, times(1)).addItemsToAdapter(arrayListOf())
+        verify(mockGridView, times(1)).addItemsToAdapter(arrayListOf())
     }
 }

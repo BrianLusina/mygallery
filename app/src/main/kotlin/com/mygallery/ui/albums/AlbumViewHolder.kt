@@ -11,11 +11,13 @@ import kotlinx.android.synthetic.main.item_album.view.*
  * @author lusinabrian on 16/02/18.
  * @Notes Main View holder
  */
-class AlbumViewHolder(itemView: View, private val albumModelList: ArrayList<AlbumModel>) : BaseViewHolder<AlbumModel>(itemView){
+class AlbumViewHolder(itemView: View, private val albumModelList: ArrayList<AlbumModel>)
+    : BaseViewHolder<AlbumModel>(itemView) {
 
     lateinit var callBack: AlbumsRecyclerAdapter.Callback
 
-    constructor(itemView: View, albumModelList: ArrayList<AlbumModel>, callBack : AlbumsRecyclerAdapter.Callback) : this(itemView, albumModelList){
+    constructor(itemView: View, albumModelList: ArrayList<AlbumModel>,
+                callBack: AlbumsRecyclerAdapter.Callback) : this(itemView, albumModelList) {
         this.callBack = callBack
     }
 
@@ -24,7 +26,7 @@ class AlbumViewHolder(itemView: View, private val albumModelList: ArrayList<Albu
         super.onBind(position)
         val albumItem = albumModelList[position]
 
-        with(itemView){
+        with(itemView) {
             Glide.with(context)
                     .load(albumItem.imagePath)
                     .into(image_view_thumbnail)
@@ -32,7 +34,7 @@ class AlbumViewHolder(itemView: View, private val albumModelList: ArrayList<Albu
             val videoText = "video${if (albumItem.imageCount > 1) "s" else ""}"
             val photosText = "photo${if (albumItem.imageCount > 1) "s" else ""}"
 
-            text_view_photo_count.text = "${albumItem.imageCount} ${ if(albumItem.isVideo)
+            text_view_photo_count.text = "${albumItem.imageCount} ${if (albumItem.isVideo)
                 videoText
             else
                 photosText
@@ -45,5 +47,4 @@ class AlbumViewHolder(itemView: View, private val albumModelList: ArrayList<Albu
             }
         }
     }
-
 }

@@ -11,13 +11,17 @@ import com.mygallery.ui.albums.AlbumsPresenter
 import com.mygallery.ui.albums.AlbumsPresenterImpl
 import com.mygallery.ui.albums.AlbumsRecyclerAdapter
 import com.mygallery.ui.albums.AlbumsView
-import com.mygallery.ui.photo.PhotoPresenter
-import com.mygallery.ui.photo.PhotoPresenterImpl
-import com.mygallery.ui.photo.PhotoView
+import com.mygallery.ui.photo.PhotoPagerPresenter
+import com.mygallery.ui.photo.PhotoPagerPresenterImpl
+import com.mygallery.ui.photo.PhotoPagerView
+import com.mygallery.ui.photo.PhotoPagerAdapter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenter
 import com.mygallery.ui.singlealbum.SingleAlbumPresenterImpl
-import com.mygallery.ui.singlealbum.SingleAlbumRecyclerAdapter
 import com.mygallery.ui.singlealbum.SingleAlbumView
+import com.mygallery.ui.singlealbum.grid.GridPresenter
+import com.mygallery.ui.singlealbum.grid.GridPresenterImpl
+import com.mygallery.ui.singlealbum.grid.GridRecyclerAdapter
+import com.mygallery.ui.singlealbum.grid.GridView
 import com.mygallery.ui.splash.SplashPresenter
 import com.mygallery.ui.splash.SplashPresenterImpl
 import com.mygallery.ui.splash.SplashView
@@ -30,17 +34,17 @@ import io.reactivex.disposables.CompositeDisposable
  * @Notes module for activities
  */
 @Module
-class ActivityModule(val mActivity: AppCompatActivity) {
+class ActivityModule(val activity: AppCompatActivity) {
 
     @Provides
     @ActivityCtxQualifier
     fun provideContext(): Context {
-        return mActivity
+        return activity
     }
 
     @Provides
     fun provideActivity(): Activity {
-        return mActivity
+        return activity
     }
 
     @Provides
@@ -60,7 +64,7 @@ class ActivityModule(val mActivity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideAlbumsAdapter() : AlbumsRecyclerAdapter {
+    fun provideAlbumsAdapter(): AlbumsRecyclerAdapter {
         return AlbumsRecyclerAdapter(ArrayList())
     }
 
@@ -72,18 +76,30 @@ class ActivityModule(val mActivity: AppCompatActivity) {
 
     @Provides
     @ActivityScope
-    fun provideSingleAlbumsPresenter(singleAlbumPresenter: SingleAlbumPresenterImpl<SingleAlbumView>) : SingleAlbumPresenter<SingleAlbumView>{
+    fun provideSingleAlbumPresenter(singleAlbumPresenter: SingleAlbumPresenterImpl<SingleAlbumView>)
+            : SingleAlbumPresenter<SingleAlbumView> {
         return singleAlbumPresenter
     }
 
     @Provides
-    fun provideSingleAlbumAdapter() : SingleAlbumRecyclerAdapter{
-        return SingleAlbumRecyclerAdapter(arrayListOf())
+    @ActivityScope
+    fun provideGridPresenter(gridPresenter: GridPresenterImpl<GridView>): GridPresenter<GridView> {
+        return gridPresenter
+    }
+
+    @Provides
+    fun provideGridRecyclerAdapter(): GridRecyclerAdapter {
+        return GridRecyclerAdapter(arrayListOf())
     }
 
     @Provides
     @ActivityScope
-    fun providePhotoPresenter(photoPresenter: PhotoPresenterImpl<PhotoView>) : PhotoPresenter<PhotoView>{
-        return photoPresenter
+    fun providePhotoPagerPresenter(photoPagerPresenter: PhotoPagerPresenterImpl<PhotoPagerView>): PhotoPagerPresenter<PhotoPagerView> {
+        return photoPagerPresenter
+    }
+
+    @Provides
+    fun providePhotoPagerAdapter(): PhotoPagerAdapter {
+        return PhotoPagerAdapter(activity.supportFragmentManager)
     }
 }

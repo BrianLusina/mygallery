@@ -171,6 +171,10 @@ android {
             }
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField("String", "APP_CENTER_KEY", APP_CENTER_KEY)
+    }
 }
 
 androidExtensions {
@@ -192,6 +196,7 @@ dependencies {
     // jetbrains dependencies
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation "com.google.code.gson:gson:2.8.2"
 
@@ -220,6 +225,9 @@ dependencies {
 
     // material dialogs
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"
+
+    compile "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    compile "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 
     // tests
     testImplementation "junit:junit:$jUnitVersion"

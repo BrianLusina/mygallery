@@ -5,12 +5,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import com.mygallery.app.MyGalleryApp
 import com.mygallery.di.components.ActivityComponent
 import com.mygallery.di.components.AppComponent
@@ -26,10 +22,10 @@ import org.jetbrains.anko.AnkoLogger
 
 abstract class BaseActivity : AppCompatActivity(), BaseView, AnkoLogger {
 
-    val appComponent : AppComponent by lazy { (application as MyGalleryApp).appComponent }
+    val appComponent: AppComponent by lazy { (application as MyGalleryApp).appComponent }
 
     // fields
-    val activityComponent: ActivityComponent by lazy{
+    val activityComponent: ActivityComponent by lazy {
         DaggerActivityComponent.builder()
                 .activityModule(ActivityModule(this))
                 .appComponent(appComponent)
@@ -57,7 +53,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseView, AnkoLogger {
 
     @TargetApi(Build.VERSION_CODES.M)
     fun hasPermission(permission: String): Boolean {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
     }
 
     /**

@@ -3,6 +3,7 @@
     <string name="title_toolbar">Folders</string>
     <string name="nav_title_all_folders">All Folders</string>
     <string name="nav_title_hidden_folders">Hidden Folders</string>
+    <string name="nav_title_open_source">Open Source</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>

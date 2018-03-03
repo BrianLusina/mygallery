@@ -44,4 +44,8 @@ constructor(dataManager: DataManager,
     override fun onLaunchCameraClicked() {
 
     }
+
+    override fun onOpenSourceMenuClicked() {
+        baseView.openGithubPage()
+    }
 }

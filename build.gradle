@@ -16,7 +16,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.[version]"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
 }
 
 allprojects {
@@ -146,6 +146,9 @@ ext {
 
     // multidex
     multiDexVersion = "1.0.2"
+
+    // App Center
+    appCenterSdkVersion = '1.4.0'
 
     // COMMON TEST DEPENDENCIES
     jUnitVersion = "4.12"

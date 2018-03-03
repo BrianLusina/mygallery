@@ -5,23 +5,12 @@ import com.mygallery.ui.base.BaseView
 interface SingleAlbumView : BaseView {
 
     /**
-     * Sets up Toolbar
+     * Setup Fragment
      * */
-    fun setupToolbar()
-
-    /**
-     * Sets up Recycler Adapter
-     * */
-    fun setupRecyclerAdapter()
+    fun setupFragment()
 
     /**
      * Receives Bundle from intent
      * */
     fun retrieveBundleFromIntent()
-
-    /**
-     * Adds Items to adapter
-     * @param imageList Array List of images from the given folder path
-     * */
-    fun addItemsToAdapter(imageList : ArrayList<String>)
 }

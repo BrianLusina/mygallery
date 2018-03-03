@@ -13,7 +13,7 @@ import javax.inject.Singleton
  * @Notes Implementation for the file helper
  */
 @Singleton
-class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context): FileHelper {
+class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context) : FileHelper {
 
     override fun getAllImagePaths(): ArrayList<AlbumModel> {
         val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -29,15 +29,16 @@ class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context):
                 MediaStore.Images.ImageColumns.DATA)
         val cursor = context.contentResolver.query(uri, projection, bucketGroupBy, null, bucketOrderBy)
 
-        if(cursor != null){
+        if (cursor != null) {
             val columnIndexData = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
             val columnIndexFolderName = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
 
-            while(cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 val absolutePathOfImage = cursor.getString(columnIndexData)
                 val selectionArgs = arrayOf("%" + cursor.getString(columnIndexFolderName) + "%")
                 val selection = MediaStore.Images.Media.DATA + " like ? "
-                val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+                val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA,
+                        MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
                 cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs,
                         null)
 
@@ -49,7 +50,7 @@ class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context):
             }
         }
 
-        if(cursorBucket != null){
+        if (cursorBucket != null) {
             cursorBucket.close()
         }
 
@@ -82,15 +83,18 @@ class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context):
                 val selectionArgs = arrayOf("%" + cursor.getString(columnIndexAlbumName) + "%")
 
                 val selection = MediaStore.Video.Media.DATA + " like ? "
-                val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Video.Media.BUCKET_DISPLAY_NAME)
+                val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA,
+                        MediaStore.Video.Media.BUCKET_DISPLAY_NAME)
 
-                cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs, null)
+                cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection,
+                        selectionArgs, null)
 
-                albumsList.add(AlbumModel(cursor.getString(columnIndexAlbumName), cursor.getString(columnIndexAlbumVideo), cursorBucket.count, true))
+                albumsList.add(AlbumModel(cursor.getString(columnIndexAlbumName),
+                        cursor.getString(columnIndexAlbumVideo), cursorBucket.count, true))
             }
         }
 
-        if (cursorBucket != null){
+        if (cursorBucket != null) {
             cursorBucket.close()
         }
 
@@ -108,9 +112,11 @@ class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context):
         val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val selection = MediaStore.Images.Media.DATA + " like ? "
 
-        val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+        val projectionOnlyBucket = arrayOf(MediaStore.MediaColumns.DATA,
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
 
-        val cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection, selectionArgs, null)
+        val cursorBucket = context.contentResolver.query(uri, projectionOnlyBucket, selection,
+                selectionArgs, null)
 
         val columnIndexData = cursorBucket.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
 
@@ -124,5 +130,4 @@ class FileHelperImpl @Inject constructor(@AppCtxQualifier val context: Context):
 
         return listOfAllImages
     }
-
 }
