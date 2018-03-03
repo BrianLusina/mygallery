@@ -1,6 +1,6 @@
 ---
 format_version: '4'
-#default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: android
 trigger_map:
         - push_branch: "master"
@@ -26,22 +26,22 @@ workflows:
                 steps:
                         - activate-ssh-key@3.1.1:
                                 run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-                        - git-clone@4.0.7: {}
+                        - git-clone@4.0.8: {}
                         - cache-pull@2.0.1: {}
                         - script@1.1.5:
                                 title: Setup the build process
                         - file-downloader:
                                 inputs:
                                         - source: $BITRISEIO_GRADLE_PROPERTIES_URL
-                                        - destination: "$HOME/$BITRISE_SOURCE_DIR/gradle.properties"
+                                        - destination: "$BITRISE_SOURCE_DIR/gradle.properties"
                         - file-downloader:
                                 inputs:
                                         - source: $BITRISEIO_KEYSTORE_PROPERTIES_URL
-                                        - destination: "$HOME/$BITRISE_SOURCE_DIR/keystores/keystore.properties"
+                                        - destination: "$BITRISE_SOURCE_DIR/keystores/keystore.properties"
                         - file-downloader:
                                 inputs:
                                         - source: $BITRISEIO_PUBLISH_KEY_URL
-                                        - destination: "$HOME/$BITRISE_SOURCE_DIR/keystores/publish_key.json"
+                                        - destination: "$BITRISE_SOURCE_DIR/keystores/publish_key.json"
 
                         - install-missing-android-tools@2.1.1: {}
                         - gradle-runner@1.8.2:
@@ -88,7 +88,7 @@ workflows:
                         - file-downloader:
                                 inputs:
                                         - source: $BITRISEIO_ANDROID_KEYSTORE_URL
-                                        - destination: "$HOME/$BITRISE_SOURCE_DIR/mygallery.jks"
+                                        - destination: "$BITRISE_SOURCE_DIR/mygallery.jks"
                         - set-android-manifest-versions@1.0.5:
                                 inputs:
                                         - manifest_file: "$BITRISE_SOURCE_DIR/app/AndroidManifest.xml"

@@ -1,0 +1,11 @@
+-dontwarn org.jetbrains.anko.**
+-dontwarn org.jetbrains.anko.collections.SparseArraySequence
+-dontwarn org.jetbrains.anko.collections.SparseBooleanArraySequence
+-dontwarn org.jetbrains.anko.collections.SparseIntArraySequence
+-dontwarn org.jetbrains.anko.custom.*
+-dontwarn org.jetbrains.anko.internals.AnkoInternals
+-dontwarn org.jetbrains.anko.internals.AnkoInternals$initiateView$2
+-dontwarn org.jetbrains.anko.collections.SparseArraySequence$SparseArrayIterator
+-dontwarn org.jetbrains.anko.collections.SparseBooleanArraySequence$SparseIntArrayIterator
+-dontwarn org.jetbrains.anko.collections.SparseIntArraySequence$SparseIntArrayIterator
+-dontwarn org.jetbrains.anko.internals.AnkoInternals$initiateView$1
