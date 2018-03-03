@@ -9,6 +9,11 @@ import com.mygallery.di.components.AppComponent
 import com.mygallery.di.components.DaggerAppComponent
 import com.mygallery.di.modules.AppModule
 import io.fabric.sdk.android.Fabric
+import com.microsoft.appcenter.crashes.Crashes
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.AppCenter
+import com.mygallery.BuildConfig
+
 
 class MyGalleryApp : Application(){
 
@@ -25,6 +30,10 @@ class MyGalleryApp : Application(){
 
         Fabric.with(this, Crashlytics())
         Fabric.with(this, Answers())
+
+        AppCenter.start(this,
+                BuildConfig.APP_CENTER_KEY,
+                Analytics::class.java, Crashes::class.java)
     }
 
     override fun attachBaseContext(base: Context?) {

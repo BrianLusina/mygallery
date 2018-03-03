@@ -171,6 +171,10 @@ android {
             }
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField("String", "APP_CENTER_KEY", APP_CENTER_KEY)
+    }
 }
 
 androidExtensions {
@@ -221,6 +225,9 @@ dependencies {
 
     // material dialogs
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"
+
+    compile "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    compile "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 
     // tests
     testImplementation "junit:junit:$jUnitVersion"

@@ -147,6 +147,9 @@ ext {
     // multidex
     multiDexVersion = "1.0.2"
 
+    // App Center
+    appCenterSdkVersion = '1.4.0'
+
     // COMMON TEST DEPENDENCIES
     jUnitVersion = "4.12"
     runnerVersion = "1.0.1"

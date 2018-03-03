@@ -73,10 +73,18 @@ class GridPresenterTests {
     }
 
     @Test
-    fun testOnRetrieveBundleReceivesIntent(){
-        gridPresenter.onRetrieveBundle()
+    fun testOnCreateView(){
+        gridPresenter.onCreateView()
 
-        verify(mockGridView, times(1)).retrieveBundleFromIntent()
+        verify(mockGridView, times(1)).retrieveBundleFromArguments()
+        verify(mockGridView, times(1)).prepareTransitions()
+    }
+
+    @Test
+    fun testOnViewCreated(){
+        gridPresenter.onViewCreated()
+
+        verify(mockGridView, times(1)).scrollToPosition()
     }
 
     @Test

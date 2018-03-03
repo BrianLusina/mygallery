@@ -63,11 +63,10 @@ class PhotoPagerPresenterTest {
     }
 
     @Test
-    fun testOnResumeInitializesView() {
-        photoPagerPagerPresenter.onResume()
+    fun testOnPrepareSharedElementTransition() {
+        photoPagerPagerPresenter.onPrepareSharedElementTransition()
 
-        verify(mockPhotoPagerView, times(1)).setupToolbar()
-        verify(mockPhotoPagerView, times(1)).setupFullScreenImage()
+        verify(mockPhotoPagerView, times(1)).prepareSharedElementTransition()
     }
 
     @Test
