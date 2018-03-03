@@ -70,6 +70,9 @@ Deployment has been configured for PlayStore and the [Play Publisher](https://gi
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE) file for details
 
+### References
+[Android Developers Blog](https://android-developers.googleblog.com/2018/02/continuous-shared-element-transitions.html)
+
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
