@@ -1,11 +1,12 @@
 package com.mygallery.ui.singlealbum.grid
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.os.Build
 import android.os.Bundle
-import android.support.transition.TransitionInflater
-import android.support.transition.TransitionSet
+import android.transition.TransitionInflater
+import android.transition.TransitionSet
 import android.support.v4.app.SharedElementCallback
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,6 +85,7 @@ class GridFragment : BaseFragment(), GridView, GridRecyclerAdapter.Callback {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     override fun prepareTransitions() {
         exitTransition = TransitionInflater.from(context).inflateTransition(
                 R.transition.transition_grid_exit)

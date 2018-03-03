@@ -1,16 +1,15 @@
 package com.mygallery.ui.photo
 
+import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.support.transition.TransitionInflater
+import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.support.v4.app.SharedElementCallback
 import android.support.v4.view.ViewPager
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
-import com.bumptech.glide.Glide
 import com.mygallery.R
 import com.mygallery.ui.base.BaseFragment
 import com.mygallery.utils.BUNDLE_KEY_CURRENT_POSITION
@@ -47,6 +46,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
         if (savedInstanceState != null){
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
             photoArrayList = savedInstanceState.getStringArrayList(KEY_PHOTO_ARR_LIST)
+            photoCount = photoArrayList.size
         }
     }
 
@@ -61,7 +61,6 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
 
         viewPager.adapter = photoPagerAdapter
 
-        photoPagerAdapter.photoCount = photoCount
         photoPagerAdapter.photoArrayList = photoArrayList
 
         viewPager.currentItem = currentPosition
@@ -69,7 +68,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
             override fun onPageSelected(position: Int) {
                 currentPosition = position
             }
-        });
+        })
 
         photoPagerPresenter.onPrepareSharedElementTransition()
 
@@ -91,6 +90,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
             photoArrayList = savedInstanceState.getStringArrayList(KEY_PHOTO_ARR_LIST)
+            photoCount = photoArrayList.size
         }
     }
 
@@ -102,6 +102,7 @@ class PhotoPagerFragment : BaseFragment(), PhotoPagerView {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun prepareSharedElementTransition() {
         val transition = TransitionInflater.from(context).inflateTransition(R.transition.transition_photo_shared_element)
         sharedElementEnterTransition = transition
